@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivan Dubovyi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(173, 216, 230, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 80px 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Home Section */
+        #home {
+            background: linear-gradient(135deg, #add8e6 0%, #ffffff 100%);
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #2c5282;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: #4a5568;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #2c5282;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(44, 82, 130, 0.3);
+        }
+
+        /* Story Section */
+        #story {
+            background: white;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .story-content h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .story-image {
+            text-align: center;
+        }
+
+        .story-image img {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .story-image img:hover {
+            transform: scale(1.1);
+        }
+
+        .placeholder-img {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #add8e6, #87ceeb);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Coding Section */
+        #coding {
+            background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
+        }
+
+        .coding-main-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: start;
+            margin-bottom: 3rem;
+        }
+
+        .coding-text-content h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 1.5rem;
+        }
+
+        .coding-text-content p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .coding-image-container {
+            text-align: center;
+        }
+
+        .coding-image-container img {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .coding-image-container img:hover {
+            transform: scale(1.1);
+        }
+
+        .coding-image-container .placeholder-img {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            margin: 0 auto;
+        }
+
+        .coding-button {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 15px 30px;
+            background: #2c5282;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(44, 82, 130, 0.2);
+        }
+
+        .coding-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 82, 130, 0.4);
+            background: #1e3a5f;
+        }
+
+        .coding-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(44, 82, 130, 0.3);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #add8e6, #87ceeb);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: scale(1.05);
+        }
+
+        .skill-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* School Section */
+        #school {
+            background: white;
+        }
+
+        .school-content {
+            text-align: center;
+        }
+
+        .school-content h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 2rem;
+        }
+
+        .school-timeline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-item h3 {
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .timeline-item img {
+            width: 100%;
+            max-width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item img:hover {
+            transform: scale(1.1);
+        }
+
+        .timeline-item .placeholder-img {
+            width: 200px;
+            height: 150px;
+            margin: 0 auto 1rem;
+        }
+
+        /* Soccer Section */
+        #soccer {
+            background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
+        }
+
+        .soccer-content {
+            text-align: center;
+        }
+
+        .soccer-content h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 2rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .achievement-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .achievement-card h3 {
+            color: #2c5282;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .achievement-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-card img:hover {
+            transform: scale(1.1);
+        }
+
+        .achievement-card .placeholder-img {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 1rem;
+        }
+
+        /* Refereeing Section */
+        #refereeing {
+            background: white;
+        }
+
+        /* Gallery Section */
+        #gallery {
+            background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
+        }
+
+        .gallery-content {
+            text-align: center;
+        }
+
+        .gallery-content h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 2rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .photo-item {
+            background: linear-gradient(135deg, #add8e6, #87ceeb);
+            height: 200px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                padding: 0 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .story-grid, .school-timeline, .coding-main-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .placeholder-img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .coding-image-container .placeholder-img,
+            .coding-image-container img {
+                max-width: 300px;
+                height: 400px;
+            }
+
+            section {
+                padding: 60px 20px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#story" class="nav-link">My Story</a></li>
+            <li><a href="#coding" class="nav-link">Coding</a></li>
+            <li><a href="#school" class="nav-link">School</a></li>
+            <li><a href="#soccer" class="nav-link">Sports</a></li>
+            <li><a href="#refereeing" class="nav-link">Refereeing</a></li>
+            <li><a href="#gallery" class="nav-link">Gallery</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Ivan Dubovyi</h1>
+                <div class="subtitle">Student • Coder • Athlete</div>
+                <p class="description">Hey everyone! My name is, you guessed it - Ivan Dubovyi. I am a teenager, soon to be a man, born in the big '11, in a hot month of June. I have big, I dare to say massive ambitions in the areas of coding and soccer. Though those two things are very different from each other, for the past years, I've been trying to combine these fields. In this website, I sum up on my process done already, though there is way more to go!</p>
+                <a href="#story" class="cta-button">Discover My Story</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h2>My Story</h2>
+                    <p>Hello again! Shortly about my story: I was born in Ukraine, and lived my happy life in a peacful city of Melitopol. Then, "life" happened, and I was forced to move to a different country.</p>
+                    <p>In the US, I started a new life. At the age of 10, I came to America, with a minimal knowledge of the language. Though it was hard - I made my way through. Now, as of 2025, I'm in 8th grade, working hard to achieve all of my goals.</p>
+                    <p>I found interests in coding and soccer. Coding was always close to me - I started with the easiest languages, and then moved up the ranks. While sitting in the computer all day was interesting, I also wanted to play outside and talk to people. Soccer - satisfied all the checks on my checklist, and it easily became a gigantic part of my life</p>
+                </div>
+                <div class="story-image">
+                    <!-- Replace src with your image path -->
+                    <img src="coding1.jpg" alt="Ivan working on project">
+                    <p><em>Me working on Scratch, 8 years old</em></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="coding">
+        <div class="container">
+            <div class="coding-main-grid">
+                <div class="coding-text-content">
+                    <h2>My Coding Journey</h2>
+                    <p>Programming started out as a hobby for me, but now - it's a lifestyle. I started on Scratch, learning it step by step, in an online school called ItgenIo. At the age of 8, I worked as hard as I could, gaining 100 hours of lessons by the age of 10, and being able to do complex projects using Scratch.</p>
+                    <p>As I started diving deeper into the complex world of technology, I began learning about HTML & CSS. Using these languages, I learned about building websites. I could build simple algorithms that would help in building of a complex website. <b> Using HTML & CSS, I could build a big part of this website.</b></p>
+                    <p>After 96 hours of joy and pleasure using HTML and CSS, I transitioned on working with JavaScript. For the first couple lessons - it was hard. Learning a new language is always challenging, but JavaScript was especially hard for me. I was confused at first, but my coaches helped me figure everything out, and I spent 118 hours learning JavaScript.</p>
+                    <p>Recently, I've decided to move to a new language. Python, is something that I am really interested in, as I can make games and learn more about AI using Python. Everyday I'm exploring Python, learning about new cool stuff and trying out new projects.</p>
+                    <p>On the right, you can see a small part of my code, that I made using JavaScript. If you're an expert, and you wanna check out more of my work - just click the button. You will be sent straight to my personal GitHub account, where you can look through my work.</pß>
+                </div>
+                <div class="coding-image-container">
+                    <!-- Replace src with your image path -->
+                    <img src="code.png" alt="Ivan coding" style="object-position: center 20%">
+                    <a href="https://github.com/ivandubovyi" class="coding-button">View My Projects</a>
+                </div>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Scratch</h3>
+                    <p>My first programming languages! I love creating beautiful, responsive websites and learning new CSS tricks every day.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>HTML & CSS</h3>
+                    <p>HTML & CSS are fundamental languages in my coding carrer. I use those two everyday I work with my code, especially if I'm working on creating websites.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>JavaScript</h3>
+                    <p>JavaScript is my favorite language, as it adds function into my websites, and is making it feel alive and engaging.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Python</h3>
+                    <p>I recently started learning and using this Python. It has been one of the most challenging, though interesting languages I've ever learned.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="school">
+        <div class="container">
+            <div class="school-content">
+                <h2>My Educational Journey</h2>
+                <p>Education has always been important to me. Here's my academic journey so far:</p>
+                
+                <div class="school-timeline">
+                    <div class="timeline-item">
+                        <!-- Replace src with your image path -->
+                        <img src="1stclass.jpg" alt="Elementary School" style="object-position: center top">
+                        <h3>Elementary Years (2018-2023)</h3>
+                        <p>I started my school career in 2018. I went to 1st grade at Elementary School No. 3, in my home city of Melitopol. There, I gained basic knowledge about Math, English, and Science. I won a couple awards as well. I won 2 math contests, and reader's contest - where you have to write a poem, memorize it, and perform it in front of the judges. When I moved to the US, I started out in the Castle Hills Elementary. I'm really grateful for that school for helping me adapt in the US with barely any knowledge of English. Every teacher was very helpful, and I'm thankful for everyone who helped me on my journey in that school.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <!-- Replace src with your image path -->
+                        <img src="IMG_1214.JPG" alt="Middle School" style="object-position: center top">
+                        <h3>Middle School (2023-2026)</h3>
+                        <p>After 5th grade, I went to the Middle School Honors Academy at Christiana High School. I had to go through a selection: doing a special test, getting recommendations from my teachers, and even recording a video about my skills. Though it was hard to get in, especially with minimal knowledge of English, I tried my best, and got into the school. Throughout all 3 years at this school, I maintained A's or high B's. I participated in Soccer in 7th and 8th grade, did Math League in 7th and 8th grade, and always tried to involve myself, not only in classes, but in other different activities and extracurriculars.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="soccer">
+        <div class="container">
+            <div class="soccer-content">
+                <h2>Sports Career</h2>
+                <p>Soccer has been a huge part of my life for 8 years. It's taught me valuable life lessons and given me some amazing experiences:</p>
+                
+                <div class="achievements-grid">
+                    <div class="achievement-card">
+                        <!-- Replace src with your image path -->
+                        <img src="karatesuit2.jpg" alt="Soccer Team" style="object-position: center 18%">
+                        <h3>Karate</h3>
+                        <p>Karate has been the first sport I've ever tried. I realized - it's boring to just sit infront of computer the whole time, so I tried something new. I've done karate for 2 years, but then something clicked. Karate became boring, I wasn't interested anymore. So, I moved on, to a different sport, where I can talk and communicate with people.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <!-- Replace src with your image path -->
+                        <img src="IMG_5170.JPG" alt="Trophy" style="object-position: center 32%">
+                        <h3>Soccer in YMCA</h3>
+                        <p>YMCA was the place where my soccer career truly kicked off. I started training twice a week solo, and once with a team, and having games every weekend. I started really enjoying soccer, as it was something that would release my energy and bring me joy at the same time</p>
+                    </div>
+                    <div class="achievement-card">
+                        <!-- Replace src with your image path -->
+                        <img src="IMG_0599.JPG" alt="Training" style="object-position: center 30%">
+                        <h3>Soccer in Honors Academy</h3>
+                        <p>At my school, Honors Academy, I've played 2 seasons. In 7th grade, I tried out for the team and successfully made it in. It was a really fun and interesting experience playing at a Middle School level, as I got a lot of experience, got to know 6th and 8th graders, and made a lot of new friends. In 8th grade, it was an even better experience, as I was more prepared and skilful. Overall, it was one of the best experiences in my life playing with this team!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="refereeing">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h2>Refereeing</h2>
+                    <p>My refereeing journey started in 2025, because of my passion to soccer. I always wanted to try a different role in soccer, and refereeing was the perfect opportunity for me. I started learning about it.</p>
+                    <p>Over the summer of 2025, I completed a course of lessons, and in mid-fall, I officiated my first game. It was fun and interesting experience, being the center of the game I always loved and making decisions on the field that would decide the outcome of the game</p>
+                    <p>As of November 2025, I refereed over 20 games, from ages u8 to u18. I worked as an assistant referee, and as the center referee, and I don't plan to stop. Now, being a referee is a lifestyle for me. I can be a part of the game, while also making key decisions. That's what I love the most about refereeing.</p>
+                </div>
+                <div class="story-image">
+                    <img src="IMG_0972.JPG" alt="Referee">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <div class="gallery-content">
+                <h2>Photo Gallery</h2>
+                <p>Here are some memorable moments from my coding projects, soccer games, and school activities:</p>
+                
+                <div class="photo-grid">
+                    <div class="photo-item">
+                        <img src="ukraine.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                        <img src="tripp.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                        <img src="scratchcomp.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                        <img src="young1.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                        <img src="karateshopping.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                        <img src="beach.jpg" alt="Coding Setup" style="object-position: center 70%">
+                    </div>
+                    <div class="photo-item">
+                        <img src="mancity1.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                       <img src="chickfila1.jpg" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                       <img src="IMG_4027.JPG" alt="Coding Setup" style="object-position: center 10%">
+                    </div>
+                    <div class="photo-item">
+                       <img src="IMG_6140.JPG" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                       <img src="IMG_5782.JPG" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                       <img src="IMG_9959.JPG" alt="Coding Setup">
+                    </div>
+                    <div class="photo-item">
+                       <img src="IMG_3135.JPG" alt="Coding Setup" style="object-position: center 32%">
+                    </div><div class="photo-item">
+                       <img src="IMG_0990.JPG" alt="Coding Setup">
+                    </div><div class="photo-item">
+                       <img src="IMG_5436.JPG" alt="Coding Setup" style="object-position: center 32%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling and active navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Update active navigation on scroll
+            function updateActiveNav() {
+                const scrollPos = window.scrollY + 100;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        navLinks[index].classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+
+            // Add animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and images
+            const animatedElements = document.querySelectorAll('.skill-card, .achievement-card, .timeline-item, .photo-item');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Photo gallery click interaction
+            const photoItems = document.querySelectorAll('.photo-item');
+            photoItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1.05)';
+                    }, 150);
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

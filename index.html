@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +15,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            scroll-behavior: smooth;
         }
 
-        /* Navigation */
+        html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+}
         nav {
             position: fixed;
             top: 0;
@@ -53,14 +54,16 @@
             transform: translateY(-2px);
         }
 
-        /* Sections */
         section {
-            min-height: 100vh;
-            padding: 80px 20px 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    min-height: 100vh;
+    padding: 80px 20px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
         }
+        
 
         .container {
             max-width: 1200px;
@@ -68,15 +71,26 @@
             margin: 0 auto;
         }
 
-        /* Home Section */
         #home {
             background: linear-gradient(135deg, #add8e6 0%, #ffffff 100%);
-            text-align: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .hero-content {
+            text-align: left;
+            padding-top: 0;
         }
 
         .hero-content h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
+            margin-top: 0;
             color: #2c5282;
             animation: fadeInUp 1s ease;
         }
@@ -91,8 +105,14 @@
         .hero-content .description {
             font-size: 1.1rem;
             max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 0 2rem 0;
             animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 1s ease 0.6s both;
         }
 
         .cta-button {
@@ -104,15 +124,61 @@
             border-radius: 30px;
             font-weight: 600;
             transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.6s both;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(44, 82, 130, 0.3);
+       .cta-button,
+.coding-button {
+    position: relative;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.cta-button:hover,
+.coding-button:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 30px rgba(44, 82, 130, 0.45),
+        0 0 0 3px rgba(173, 216, 230, 0.35);
+    background-color: #1e3a5f;
+}
+
+.cta-button:active,
+.coding-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(44, 82, 130, 0.4);
+}
+
+        .hero-image {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            margin-top: 0;
         }
 
-        /* Story Section */
+        .hero-image img {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            max-height: 550px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            margin-top: 0;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-image .placeholder-img {
+            width: 100%;
+            max-width: 450px;
+            height: 550px;
+        }
+
         #story {
             background: white;
         }
@@ -169,7 +235,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* Coding Section */
         #coding {
             background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
         }
@@ -271,7 +336,6 @@
             font-size: 1.5rem;
         }
 
-        /* School Section */
         #school {
             background: white;
         }
@@ -331,7 +395,6 @@
             margin: 0 auto 1rem;
         }
 
-        /* Soccer Section */
         #soccer {
             background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
         }
@@ -385,12 +448,10 @@
             margin-bottom: 1rem;
         }
 
-        /* Refereeing Section */
         #refereeing {
-            background: white;
+            background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
         }
 
-        /* Gallery Section */
         #gallery {
             background: linear-gradient(135deg, #f0f8ff 0%, #add8e6 100%);
         }
@@ -441,7 +502,6 @@
             transform: scale(1.05);
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -453,7 +513,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             nav ul {
                 gap: 1rem;
@@ -465,9 +524,22 @@
                 font-size: 2.5rem;
             }
 
-            .story-grid, .school-timeline, .coding-main-grid {
+            .hero-grid, .story-grid, .school-timeline, .coding-main-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-content .description {
+                margin: 0 auto 2rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
             }
 
             .placeholder-img {
@@ -491,39 +563,29 @@
     <nav>
         <ul>
             <li><a href="#home" class="nav-link active">Home</a></li>
-            <li><a href="#story" class="nav-link">My Story</a></li>
             <li><a href="#coding" class="nav-link">Coding</a></li>
+            <li><a href="#story" class="nav-link">My Story</a></li>
+            <li><a href="#refereeing" class="nav-link">Refereeing</a></li>
             <li><a href="#school" class="nav-link">School</a></li>
             <li><a href="#soccer" class="nav-link">Sports</a></li>
-            <li><a href="#refereeing" class="nav-link">Refereeing</a></li>
             <li><a href="#gallery" class="nav-link">Gallery</a></li>
         </ul>
     </nav>
 
     <section id="home">
         <div class="container">
-            <div class="hero-content">
-                <h1>Ivan Dubovyi</h1>
-                <div class="subtitle">Student • Coder • Athlete</div>
-                <p class="description">Hey everyone! My name is, you guessed it - Ivan Dubovyi. I am a teenager, soon to be a man, born in the big '11, in a hot month of June. I have big, I dare to say massive ambitions in the areas of coding and soccer. Though those two things are very different from each other, for the past years, I've been trying to combine these fields. In this website, I sum up on my process done already, though there is way more to go!</p>
-                <a href="#story" class="cta-button">Discover My Story</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="story">
-        <div class="container">
-            <div class="story-grid">
-                <div class="story-content">
-                    <h2>My Story</h2>
-                    <p>Hello again! Shortly about my story: I was born in Ukraine, and lived my happy life in a peacful city of Melitopol. Then, "life" happened, and I was forced to move to a different country.</p>
-                    <p>In the US, I started a new life. At the age of 10, I came to America, with a minimal knowledge of the language. Though it was hard - I made my way through. Now, as of 2025, I'm in 8th grade, working hard to achieve all of my goals.</p>
-                    <p>I found interests in coding and soccer. Coding was always close to me - I started with the easiest languages, and then moved up the ranks. While sitting in the computer all day was interesting, I also wanted to play outside and talk to people. Soccer - satisfied all the checks on my checklist, and it easily became a gigantic part of my life</p>
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>Ivan Dubovyi</h1>
+                    <div class="subtitle">Student • Coder • Athlete</div>
+                    <p class="description">Hey everyone! My name is, you guessed it - Ivan Dubovyi. I am a teenager, soon to be a man, born in the big '11, in a hot month of June. I have big, I dare to say massive ambitions in the areas of coding and soccer. Though those two things are very different from each other, for the past years, I've been trying to combine these fields. In this website, I sum up on my process done already, though there is way more to go!</p>
+                    <div class="cta-buttons">
+                        <a href="#coding" class="cta-button">View My Code</a>
+                        <a href="#story" class="cta-button">Discover My Story</a>
+                    </div>
                 </div>
-                <div class="story-image">
-                    <!-- Replace src with your image path -->
-                    <img src="coding1.jpg" alt="Ivan working on project">
-                    <p><em>Me working on Scratch, 8 years old</em></p>
+                <div class="hero-image">
+                    <img src="IMG_4027.JPG" alt="Ivan Dubovyi">
                 </div>
             </div>
         </div>
@@ -538,10 +600,9 @@
                     <p>As I started diving deeper into the complex world of technology, I began learning about HTML & CSS. Using these languages, I learned about building websites. I could build simple algorithms that would help in building of a complex website. <b> Using HTML & CSS, I could build a big part of this website.</b></p>
                     <p>After 96 hours of joy and pleasure using HTML and CSS, I transitioned on working with JavaScript. For the first couple lessons - it was hard. Learning a new language is always challenging, but JavaScript was especially hard for me. I was confused at first, but my coaches helped me figure everything out, and I spent 118 hours learning JavaScript.</p>
                     <p>Recently, I've decided to move to a new language. Python, is something that I am really interested in, as I can make games and learn more about AI using Python. Everyday I'm exploring Python, learning about new cool stuff and trying out new projects.</p>
-                    <p>On the right, you can see a small part of my code, that I made using JavaScript. If you're an expert, and you wanna check out more of my work - just click the button. You will be sent straight to my personal GitHub account, where you can look through my work.</pß>
+                    <p>On the right, you can see a small part of my code, that I made using JavaScript. If you're an expert, and you wanna check out more of my work - just click the button. You will be sent straight to my personal GitHub account, where you can look through my work.</p>
                 </div>
                 <div class="coding-image-container">
-                    <!-- Replace src with your image path -->
                     <img src="code.png" alt="Ivan coding" style="object-position: center 20%">
                     <a href="https://github.com/ivandubovyi" class="coding-button">View My Projects</a>
                 </div>
@@ -568,6 +629,39 @@
         </div>
     </section>
 
+    <section id="story">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h2>My Story</h2>
+                    <p>Hello again! Shortly about my story: I was born in Ukraine, and lived my happy life in a peacful city of Melitopol. Then, "life" happened, and I was forced to move to a different country.</p>
+                    <p>In the US, I started a new life. At the age of 10, I came to America, with a minimal knowledge of the language. Though it was hard - I made my way through. Now, as of 2025, I'm in 8th grade, working hard to achieve all of my goals.</p>
+                    <p>I found interests in coding and soccer. Coding was always close to me - I started with the easiest languages, and then moved up the ranks. While sitting in the computer all day was interesting, I also wanted to play outside and talk to people. Soccer - satisfied all the checks on my checklist, and it easily became a gigantic part of my life</p>
+                </div>
+                <div class="story-image">
+                    <img src="coding1.jpg" alt="Ivan working on project">
+                    <p><em>Me working on Scratch, 8 years old</em></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="refereeing">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h2>Refereeing</h2>
+                    <p>My refereeing journey started in 2025, because of my passion to soccer. I always wanted to try a different role in soccer, and refereeing was the perfect opportunity for me. I started learning about it.</p>
+                    <p>Over the summer of 2025, I completed a course of lessons, and in mid-fall, I officiated my first game. It was fun and interesting experience, being the center of the game I always loved and making decisions on the field that would decide the outcome of the game</p>
+                    <p>As of November 2025, I refereed over 20 games, from ages u8 to u18. I worked as an assistant referee, and as the center referee, and I don't plan to stop. Now, being a referee is a lifestyle for me. I can be a part of the game, while also making key decisions. That's what I love the most about refereeing.</p>
+                </div>
+                <div class="story-image">
+                    <img src="IMG_0972.JPG" alt="Referee">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="school">
         <div class="container">
             <div class="school-content">
@@ -576,13 +670,11 @@
                 
                 <div class="school-timeline">
                     <div class="timeline-item">
-                        <!-- Replace src with your image path -->
                         <img src="1stclass.jpg" alt="Elementary School" style="object-position: center top">
                         <h3>Elementary Years (2018-2023)</h3>
                         <p>I started my school career in 2018. I went to 1st grade at Elementary School No. 3, in my home city of Melitopol. There, I gained basic knowledge about Math, English, and Science. I won a couple awards as well. I won 2 math contests, and reader's contest - where you have to write a poem, memorize it, and perform it in front of the judges. When I moved to the US, I started out in the Castle Hills Elementary. I'm really grateful for that school for helping me adapt in the US with barely any knowledge of English. Every teacher was very helpful, and I'm thankful for everyone who helped me on my journey in that school.</p>
                     </div>
                     <div class="timeline-item">
-                        <!-- Replace src with your image path -->
                         <img src="IMG_1214.JPG" alt="Middle School" style="object-position: center top">
                         <h3>Middle School (2023-2026)</h3>
                         <p>After 5th grade, I went to the Middle School Honors Academy at Christiana High School. I had to go through a selection: doing a special test, getting recommendations from my teachers, and even recording a video about my skills. Though it was hard to get in, especially with minimal knowledge of English, I tried my best, and got into the school. Throughout all 3 years at this school, I maintained A's or high B's. I participated in Soccer in 7th and 8th grade, did Math League in 7th and 8th grade, and always tried to involve myself, not only in classes, but in other different activities and extracurriculars.</p>
@@ -600,39 +692,20 @@
                 
                 <div class="achievements-grid">
                     <div class="achievement-card">
-                        <!-- Replace src with your image path -->
                         <img src="karatesuit2.jpg" alt="Soccer Team" style="object-position: center 18%">
                         <h3>Karate</h3>
                         <p>Karate has been the first sport I've ever tried. I realized - it's boring to just sit infront of computer the whole time, so I tried something new. I've done karate for 2 years, but then something clicked. Karate became boring, I wasn't interested anymore. So, I moved on, to a different sport, where I can talk and communicate with people.</p>
                     </div>
                     <div class="achievement-card">
-                        <!-- Replace src with your image path -->
                         <img src="IMG_5170.JPG" alt="Trophy" style="object-position: center 32%">
                         <h3>Soccer in YMCA</h3>
                         <p>YMCA was the place where my soccer career truly kicked off. I started training twice a week solo, and once with a team, and having games every weekend. I started really enjoying soccer, as it was something that would release my energy and bring me joy at the same time</p>
                     </div>
                     <div class="achievement-card">
-                        <!-- Replace src with your image path -->
                         <img src="IMG_0599.JPG" alt="Training" style="object-position: center 30%">
                         <h3>Soccer in Honors Academy</h3>
                         <p>At my school, Honors Academy, I've played 2 seasons. In 7th grade, I tried out for the team and successfully made it in. It was a really fun and interesting experience playing at a Middle School level, as I got a lot of experience, got to know 6th and 8th graders, and made a lot of new friends. In 8th grade, it was an even better experience, as I was more prepared and skilful. Overall, it was one of the best experiences in my life playing with this team!</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="refereeing">
-        <div class="container">
-            <div class="story-grid">
-                <div class="story-content">
-                    <h2>Refereeing</h2>
-                    <p>My refereeing journey started in 2025, because of my passion to soccer. I always wanted to try a different role in soccer, and refereeing was the perfect opportunity for me. I started learning about it.</p>
-                    <p>Over the summer of 2025, I completed a course of lessons, and in mid-fall, I officiated my first game. It was fun and interesting experience, being the center of the game I always loved and making decisions on the field that would decide the outcome of the game</p>
-                    <p>As of November 2025, I refereed over 20 games, from ages u8 to u18. I worked as an assistant referee, and as the center referee, and I don't plan to stop. Now, being a referee is a lifestyle for me. I can be a part of the game, while also making key decisions. That's what I love the most about refereeing.</p>
-                </div>
-                <div class="story-image">
-                    <img src="IMG_0972.JPG" alt="Referee">
                 </div>
             </div>
         </div>
@@ -694,79 +767,69 @@
     </section>
 
     <script>
-        // Smooth scrolling and active navigation
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.nav-link');
+            const ctaButtons = document.querySelectorAll('.cta-button');
             const sections = document.querySelectorAll('section');
+            const nav = document.querySelector('nav');
+const navHeight = nav ? nav.offsetHeight : 0;
 
-            // Handle navigation clicks
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth'
+const linkById = {};
+navLinks.forEach(link => {
+  const href = link.getAttribute('href'); 
+  if (href && href.startsWith('#')) {
+    linkById[href.slice(1)] = link; 
+  }
+});
+
+function setActive(id) {
+  navLinks.forEach(l => l.classList.remove('active'));
+  if (linkById[id]) linkById[id].classList.add('active');
+}
+
+const observer = new IntersectionObserver((entries) => {
+
+  const visible = entries
+    .filter(e => e.isIntersecting)
+    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+  if (visible) setActive(visible.target.id);
+}, {
+
+  root: null,
+  threshold: [0.3, 0.5, 0.7],
+  rootMargin: `-${navHeight}px 0px -40% 0px`
+});
+
+sections.forEach(section => observer.observe(section));
+if (location.hash) {
+  const id = location.hash.slice(1);
+  if (document.getElementById(id)) setActive(id);
+} else {
+  setActive(sections[0].id);
+}
+
+            function setupSmoothScroll(elements) {
+                elements.forEach(element => {
+                    element.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+
+                        if (href && href.startsWith('#')) {
+                            e.preventDefault();
+                            const targetId = href;
+                            const targetSection = document.querySelector(targetId);
+                            
+                            if (targetSection) {
+                                targetSection.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        }
                     });
                 });
-            });
+            }});
 
-            // Update active navigation on scroll
-            function updateActiveNav() {
-                const scrollPos = window.scrollY + 100;
-                
-                sections.forEach((section, index) => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    
-                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                        navLinks.forEach(link => link.classList.remove('active'));
-                        navLinks[index].classList.add('active');
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', updateActiveNav);
-
-            // Add animation on scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all cards and images
-            const animatedElements = document.querySelectorAll('.skill-card, .achievement-card, .timeline-item, .photo-item');
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'all 0.6s ease';
-                observer.observe(el);
-            });
-
-            // Photo gallery click interaction
-            const photoItems = document.querySelectorAll('.photo-item');
-            photoItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1.05)';
-                    }, 150);
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 300);
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+            setupSmoothScroll(navLinks);
+            setupSmoothScroll(ctaButtons);
+            </script>

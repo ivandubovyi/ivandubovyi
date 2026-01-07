@@ -18,9 +18,10 @@
         }
 
         html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-}
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
         nav {
             position: fixed;
             top: 0;
@@ -55,15 +56,14 @@
         }
 
         section {
-    min-height: 100vh;
-    padding: 80px 20px 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+            min-height: 100vh;
+            padding: 80px 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
-        
 
         .container {
             max-width: 1200px;
@@ -126,29 +126,29 @@
             transition: all 0.3s ease;
         }
 
-       .cta-button,
-.coding-button {
-    position: relative;
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        background-color 0.25s ease;
-}
+        .cta-button,
+        .coding-button {
+            position: relative;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background-color 0.25s ease;
+        }
 
-.cta-button:hover,
-.coding-button:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 12px 30px rgba(44, 82, 130, 0.45),
-        0 0 0 3px rgba(173, 216, 230, 0.35);
-    background-color: #1e3a5f;
-}
+        .cta-button:hover,
+        .coding-button:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 30px rgba(44, 82, 130, 0.45),
+                0 0 0 3px rgba(173, 216, 230, 0.35);
+            background-color: #1e3a5f;
+        }
 
-.cta-button:active,
-.coding-button:active {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(44, 82, 130, 0.4);
-}
+        .cta-button:active,
+        .coding-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(44, 82, 130, 0.4);
+        }
 
         .hero-image {
             display: flex;
@@ -513,18 +513,105 @@
             }
         }
 
-        @media (max-width: 768px) {
+        /* Tablet Styles (768px - 1024px) */
+        @media (max-width: 1024px) and (min-width: 769px) {
             nav ul {
-                gap: 1rem;
+                gap: 1.5rem;
+                padding: 0 1.5rem;
+            }
+
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-content .description {
+                font-size: 1rem;
+            }
+
+            .hero-grid {
+                gap: 2rem;
+            }
+
+            .coding-main-grid {
+                gap: 2rem;
+            }
+
+            .story-grid {
+                gap: 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .school-timeline {
+                gap: 2rem;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        /* Mobile Styles (up to 768px) */
+        @media (max-width: 768px) {
+            html {
+                scroll-snap-type: none;
+            }
+
+            section {
+                scroll-snap-align: none;
+                scroll-snap-stop: normal;
+            }
+
+            nav {
+                padding: 0.75rem 0;
+            }
+
+            nav ul {
+                gap: 0.5rem;
                 flex-wrap: wrap;
-                padding: 0 1rem;
+                padding: 0 0.5rem;
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 70px 15px 40px;
+                min-height: auto;
             }
 
             .hero-content h1 {
                 font-size: 2.5rem;
             }
 
-            .hero-grid, .story-grid, .school-timeline, .coding-main-grid {
+            .hero-content .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-content .description {
+                font-size: 1rem;
+            }
+
+            .hero-grid, 
+            .story-grid, 
+            .school-timeline, 
+            .coding-main-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
@@ -537,9 +624,41 @@
                 margin: 0 auto 2rem;
             }
 
+            .hero-image {
+                justify-content: center;
+            }
+
+            .hero-image img {
+                max-width: 350px;
+                max-height: 450px;
+            }
+
             .cta-buttons {
                 justify-content: center;
                 flex-wrap: wrap;
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+
+            .story-content h2,
+            .coding-text-content h2,
+            .school-content h2,
+            .soccer-content h2,
+            .gallery-content h2 {
+                font-size: 2rem;
+            }
+
+            .story-content p,
+            .coding-text-content p {
+                font-size: 1rem;
+            }
+
+            .story-image img {
+                max-width: 250px;
+                height: 250px;
             }
 
             .placeholder-img {
@@ -553,8 +672,126 @@
                 height: 400px;
             }
 
-            section {
-                padding: 60px 20px 40px;
+            .coding-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+            }
+
+            .skill-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .timeline-item {
+                padding: 1.5rem;
+            }
+
+            .timeline-item h3 {
+                font-size: 1.3rem;
+            }
+
+            .timeline-item img {
+                max-width: 180px;
+                height: 130px;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .achievement-card {
+                padding: 1.5rem;
+            }
+
+            .achievement-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .photo-item {
+                height: 150px;
+            }
+        }
+
+        /* Small Mobile Styles (up to 480px) */
+        @media (max-width: 480px) {
+            nav a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-content .description {
+                font-size: 0.95rem;
+            }
+
+            .hero-image img {
+                max-width: 280px;
+                max-height: 380px;
+            }
+
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .story-content h2,
+            .coding-text-content h2,
+            .school-content h2,
+            .soccer-content h2,
+            .gallery-content h2 {
+                font-size: 1.75rem;
+            }
+
+            .story-image img {
+                max-width: 200px;
+                height: 200px;
+            }
+
+            .placeholder-img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .coding-image-container .placeholder-img,
+            .coding-image-container img {
+                max-width: 250px;
+                height: 350px;
+            }
+
+            .skill-card,
+            .timeline-item,
+            .achievement-card {
+                padding: 1.25rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .photo-item {
+                height: 120px;
             }
         }
     </style>
@@ -833,4 +1070,5 @@ if (location.hash) {
             setupSmoothScroll(navLinks);
             setupSmoothScroll(ctaButtons);
             </script>
+
 

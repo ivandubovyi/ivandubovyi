@@ -513,7 +513,6 @@
             }
         }
 
-        /* Tablet Styles (768px - 1024px) */
         @media (max-width: 1024px) and (min-width: 769px) {
             nav ul {
                 gap: 1.5rem;
@@ -564,7 +563,6 @@
             }
         }
 
-        /* Mobile Styles (up to 768px) */
         @media (max-width: 768px) {
             html {
                 scroll-snap-type: none;
@@ -726,7 +724,6 @@
             }
         }
 
-        /* Small Mobile Styles (up to 480px) */
         @media (max-width: 480px) {
             nav a {
                 padding: 0.3rem 0.6rem;
@@ -1008,77 +1005,91 @@
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const ctaButtons = document.querySelectorAll('.cta-button');
-            const sections = document.querySelectorAll('section');
-            const nav = document.querySelector('nav');
-const navHeight = nav ? nav.offsetHeight : 0;
+document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    const sections = document.querySelectorAll('section');
+    const nav = document.querySelector('nav');
+    const navHeight = nav ? nav.offsetHeight : 0;
 
-const linkById = {};
-navLinks.forEach(link => {
-  const href = link.getAttribute('href'); 
-  if (href && href.startsWith('#')) {
-    linkById[href.slice(1)] = link; 
-  }
+    function clearActiveLinks() {
+        navLinks.forEach(link => link.classList.remove('active'));
+    }
+
+    function setActiveLink(sectionId) {
+        clearActiveLinks();
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === '#' + sectionId) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        let mostVisibleSection = null;
+        let highestRatio = 0;
+
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
+                highestRatio = entry.intersectionRatio;
+                mostVisibleSection = entry.target;
+            }
+        });
+
+        if (mostVisibleSection) {
+            setActiveLink(mostVisibleSection.id);
+        }
+    }, {
+        root: null,
+        threshold: [0.3, 0.5, 0.7],
+        rootMargin: `-${navHeight}px 0px -40% 0px`
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    if (location.hash) {
+        const sectionId = location.hash.slice(1);
+        if (document.getElementById(sectionId)) {
+            setActiveLink(sectionId);
+        }
+    } else if (sections.length > 0) {
+        setActiveLink(sections[0].id);
+    }
+
+    function setupSmoothScroll(elements) {
+        elements.forEach(element => {
+            element.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+
+                    const targetSection = document.querySelector(href);
+
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    }
+
+    setupSmoothScroll(navLinks);
+    setupSmoothScroll(ctaButtons);
 });
-
-function setActive(id) {
-  navLinks.forEach(l => l.classList.remove('active'));
-  if (linkById[id]) linkById[id].classList.add('active');
-}
-
-const observer = new IntersectionObserver((entries) => {
-
-  const visible = entries
-    .filter(e => e.isIntersecting)
-    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-  if (visible) setActive(visible.target.id);
-}, {
-
-  root: null,
-  threshold: [0.3, 0.5, 0.7],
-  rootMargin: `-${navHeight}px 0px -40% 0px`
-});
-
-sections.forEach(section => observer.observe(section));
-if (location.hash) {
-  const id = location.hash.slice(1);
-  if (document.getElementById(id)) setActive(id);
-} else {
-  setActive(sections[0].id);
-}
-
-            function setupSmoothScroll(elements) {
-                elements.forEach(element => {
-                    element.addEventListener('click', function(e) {
-                        const href = this.getAttribute('href');
-
-                        if (href && href.startsWith('#')) {
-                            e.preventDefault();
-                            const targetId = href;
-                            const targetSection = document.querySelector(targetId);
-                            
-                            if (targetSection) {
-                                targetSection.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'start'
-                                });
-                            }
-                        }
-                    });
-                });
-            }});
-
-            setupSmoothScroll(navLinks);
-            setupSmoothScroll(ctaButtons);
-            </script>
+</script>
 
 
 
 </body>
 </html>
+
 
 
 

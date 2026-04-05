@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- this is my personal website!! made by ivan dubovyi -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ivan Dubovyi</title>
     <style>
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -19,20 +22,22 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: y mandatory; 
         }
 
+        
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(173, 216, 230, 0.95);
+            background: rgba(173, 216, 230, 0.95); 
             backdrop-filter: blur(10px);
-            z-index: 1000;
+            z-index: 1000; 
             padding: 1rem 0;
             transition: all 0.3s ease;
         }
 
+        
         nav ul {
             display: flex;
             justify-content: center;
@@ -45,19 +50,21 @@
             color: #333;
             font-weight: 600;
             padding: 0.5rem 1rem;
-            border-radius: 25px;
+            border-radius: 25px; 
             transition: all 0.3s ease;
         }
 
+        
         nav a:hover, nav a.active {
             background: white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transform: translateY(-2px);
         }
 
+        
         section {
             min-height: 100vh;
-            padding: 80px 20px 60px;
+            padding: 80px 20px 60px; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -65,19 +72,22 @@
             scroll-snap-stop: always;
         }
 
+        
         .container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
         }
 
+        
         #home {
             background: linear-gradient(135deg, #add8e6 0%, #ffffff 100%);
         }
 
+        
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1.2fr 0.8fr; 
             gap: 3rem;
             align-items: start;
         }
@@ -87,6 +97,7 @@
             padding-top: 0;
         }
 
+        
         .hero-content h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
@@ -99,7 +110,7 @@
             font-size: 1.5rem;
             color: #4a5568;
             margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s both;
+            animation: fadeInUp 1s ease 0.2s both; 
         }
 
         .hero-content .description {
@@ -115,6 +126,7 @@
             animation: fadeInUp 1s ease 0.6s both;
         }
 
+        
         .cta-button {
             display: inline-block;
             padding: 15px 30px;
@@ -126,6 +138,7 @@
             transition: all 0.3s ease;
         }
 
+        
         .cta-button,
         .coding-button {
             position: relative;
@@ -137,19 +150,21 @@
 
         .cta-button:hover,
         .coding-button:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px); 
             box-shadow:
                 0 12px 30px rgba(44, 82, 130, 0.45),
-                0 0 0 3px rgba(173, 216, 230, 0.35);
-            background-color: #1e3a5f;
+                0 0 0 3px rgba(173, 216, 230, 0.35); 
+            background-color: #1e3a5f; 
         }
 
+        
         .cta-button:active,
         .coding-button:active {
             transform: translateY(-1px);
             box-shadow: 0 6px 14px rgba(44, 82, 130, 0.4);
         }
 
+        
         .hero-image {
             display: flex;
             align-items: flex-start;
@@ -169,6 +184,7 @@
             margin-top: 0;
         }
 
+        
         .hero-image img:hover {
             transform: scale(1.05);
         }
@@ -179,10 +195,12 @@
             height: 550px;
         }
 
+        
         #story {
             background: linear-gradient(135deg, #add8e6 0%, #ffffff 100%);
         }
 
+        
         .story-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -221,6 +239,7 @@
             transform: scale(1.1);
         }
 
+        
         .placeholder-img {
             width: 300px;
             height: 300px;
@@ -235,10 +254,12 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
+        
         #coding {
             background: white;
         }
 
+        
         .coding-main-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
@@ -284,6 +305,7 @@
             margin: 0 auto;
         }
 
+        
         .coding-button {
             display: inline-block;
             margin-top: 1.5rem;
@@ -311,15 +333,16 @@
             box-shadow: 0 2px 4px rgba(44, 82, 130, 0.3);
         }
 
+        
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
             gap: 2rem;
             margin-top: 3rem;
         }
 
         .skill-card {
-            background: linear-gradient(135deg, #1e3a5f, #44616c);
+            background: linear-gradient(135deg, #1e3a5f, #44616c); 
             padding: 2rem;
             border-radius: 15px;
             color: white;
@@ -327,6 +350,7 @@
             transition: transform 0.3s ease;
         }
 
+        
         .skill-card:hover {
             transform: scale(1.05);
         }
@@ -336,6 +360,127 @@
             font-size: 1.5rem;
         }
 
+        
+        
+        #portfolio {
+            background: white;
+        }
+
+        .portfolio-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .portfolio-header h2 {
+            font-size: 2.5rem;
+            color: #2c5282;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-header p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .portfolio-card {
+            background: #f7fafc; 
+            border-radius: 20px;
+            overflow: hidden; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column; 
+        }
+
+        
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(44, 82, 130, 0.15);
+        }
+
+        
+        .portfolio-card-screenshot {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            object-position: center top; 
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-card:hover .portfolio-card-screenshot {
+            transform: scale(1.03); 
+        }
+
+        
+        .portfolio-card-screenshot-placeholder {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #add8e6, #87ceeb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .portfolio-card-body {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1; 
+        }
+
+        .portfolio-card-body h3 {
+            font-size: 1.4rem;
+            color: #2c5282;
+            margin-bottom: 0.75rem;
+        }
+
+        .portfolio-card-body p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        
+        .portfolio-card-link {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #2c5282;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            align-self: flex-start; 
+            box-shadow: 0 4px 6px rgba(44, 82, 130, 0.2);
+        }
+
+        .portfolio-card-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(44, 82, 130, 0.35);
+            background: #1e3a5f;
+        }
+
+        .portfolio-card-link:active {
+            transform: translateY(-1px);
+        }
+
+        
         #school {
             background: linear-gradient(135deg, #add8e6 0%, #ffffff 100%);
         }
@@ -350,6 +495,7 @@
             margin-bottom: 2rem;
         }
 
+        
         .school-timeline {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -365,6 +511,7 @@
             transition: transform 0.3s ease;
         }
 
+        
         .timeline-item:hover {
             transform: translateY(-5px);
         }
@@ -395,6 +542,7 @@
             margin: 0 auto 1rem;
         }
 
+        
         #soccer {
             background: white;
         }
@@ -409,6 +557,7 @@
             margin-bottom: 2rem;
         }
 
+        
         .achievements-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -448,10 +597,12 @@
             margin-bottom: 1rem;
         }
 
+        
         #refereeing {
             background: white;
         }
 
+        
         #gallery {
             background: linear-gradient(135deg, #add8e6 0%, #ffffff 100%);
         }
@@ -502,17 +653,21 @@
             transform: scale(1.05);
         }
 
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(30px); 
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0); 
             }
         }
 
+        
+
+        
         @media (max-width: 1024px) and (min-width: 769px) {
             nav ul {
                 gap: 1.5rem;
@@ -561,8 +716,14 @@
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: 1.5rem;
             }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+            }
         }
 
+        
         @media (max-width: 768px) {
             html {
                 scroll-snap-type: none;
@@ -722,8 +883,22 @@
             .photo-item {
                 height: 150px;
             }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .portfolio-header h2 {
+                font-size: 2rem;
+            }
+
+            .portfolio-card-screenshot {
+                height: 180px;
+            }
         }
 
+        
         @media (max-width: 480px) {
             nav a {
                 padding: 0.3rem 0.6rem;
@@ -790,6 +965,18 @@
             .photo-item {
                 height: 120px;
             }
+
+            .portfolio-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .portfolio-card-screenshot {
+                height: 160px;
+            }
+
+            .portfolio-card-body {
+                padding: 1.25rem;
+            }
         }
     </style>
 </head>
@@ -798,6 +985,7 @@
         <ul>
             <li><a href="#home" class="nav-link active">Home</a></li>
             <li><a href="#coding" class="nav-link">Coding</a></li>
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
             <li><a href="#story" class="nav-link">My Story</a></li>
             <li><a href="#refereeing" class="nav-link">Refereeing</a></li>
             <li><a href="#school" class="nav-link">School</a></li>
@@ -863,6 +1051,51 @@
                     <h3>Python</h3>
                     <p>I recently started learning and using this Python. It has been one of the most challenging, though interesting languages I've ever learned.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Portfolio Section ── -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="portfolio-header">
+                <h2>My Portfolio</h2>
+                <p>Here are some of the projects I've built. Each one challenged me to learn something new and push my skills further.</p>
+            </div>
+
+            <div class="portfolio-grid">
+
+                <!-- Project Card 1 — duplicate this block to add more projects -->
+                <div class="portfolio-card">
+                    <!-- Replace "your-screenshot.png" with the actual image filename -->
+                    <img src="cartsim.png" alt="Project Name" class="portfolio-card-screenshot">
+                    <div class="portfolio-card-body">
+                        <h3>Cart Simulation</h3>
+                        <p>This website is an interactive physics simulation where you can test what happens when a moving cart hits a box. It has a simple, clean layout with an animated track showing the motion in real time. You can change things like the cart’s mass, its starting speed, wind resistance, and the surface type (like ice or carpet), and each of these affects how the collision plays out. After you launch the cart, you can watch what happens and see results like how far the box moves and how the speeds change. Overall, it feels like a hands-on experiment that helps you understand physics in a more visual and practical way</p>
+                        <a href="https://ivandubovyi.github.io/cartsimulation/index.html" class="portfolio-card-link" target="_blank" rel="noopener">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="portfolio-card">
+                    <img src="algebra1.png" alt="Project Name" class="portfolio-card-screenshot">
+                    <div class="portfolio-card-body">
+                        <h3>Algebra 1 Help</h3>
+                        <p>This website is basically an interactive Algebra 1 tool that makes learning feel more like a game. It has a colorful, space style design and includes things like XP points, badges, and different sections for variables, equations, graphing, and quizzes. Instead of just reading explanations, you actually get to play around with the concepts—like moving sliders to see how variables change, solving equations step by step, dragging pieces to build expressions, and watching graphs update in real time. It feels pretty casual and easy to follow, like someone is just walking you through algebra in a simple, chill way while you try things yourself</p>
+                        <a href="https://ivandubovyi.github.io/algebra1/index.html" class="portfolio-card-link" target="_blank" rel="noopener">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="portfolio-card">
+                    <img src="matchthepic.png" alt="Project Name" class="portfolio-card-screenshot">
+                    <div class="portfolio-card-body">
+                        <h3>Match The Picture</h3>
+                        <p>This website is just a simple memory game where you click cards to flip them and try to find matching pictures. All the cards are face down at first, so you have to remember where each image is as you go. When you match a pair, they stay flipped, and once you match everything, you win and get a message with a button to play again. It’s basic, but fun, like those classic matching games</p>
+                        <a href="https://ivandubovyi.github.io/matchthepicture/index.html" class="portfolio-card-link" target="_blank" rel="noopener">View Project</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1005,71 +1238,88 @@
     </section>
 
     <script>
+
 document.addEventListener('DOMContentLoaded', function () {
+
+    
     const navLinks = document.querySelectorAll('.nav-link');
     const ctaButtons = document.querySelectorAll('.cta-button');
     const sections = document.querySelectorAll('section');
     const nav = document.querySelector('nav');
-    const navHeight = nav ? nav.offsetHeight : 0;
+    const navHeight = nav ? nav.offsetHeight : 0; 
 
+    
     function clearActiveLinks() {
         navLinks.forEach(link => link.classList.remove('active'));
     }
 
+    
     function setActiveLink(sectionId) {
         clearActiveLinks();
 
         navLinks.forEach(link => {
+            
             if (link.getAttribute('href') === '#' + sectionId) {
                 link.classList.add('active');
             }
         });
     }
 
+    
+    
     const observer = new IntersectionObserver(function (entries) {
         let mostVisibleSection = null;
         let highestRatio = 0;
 
+        
         entries.forEach(entry => {
+            
             if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
                 highestRatio = entry.intersectionRatio;
                 mostVisibleSection = entry.target;
             }
         });
 
+        
         if (mostVisibleSection) {
             setActiveLink(mostVisibleSection.id);
         }
     }, {
-        root: null,
-        threshold: [0.3, 0.5, 0.7],
-        rootMargin: `-${navHeight}px 0px -40% 0px`
+        root: null, 
+        threshold: [0.3, 0.5, 0.7], 
+        rootMargin: `-${navHeight}px 0px -40% 0px` 
     });
 
+    
     sections.forEach(section => {
         observer.observe(section);
     });
 
+    
     if (location.hash) {
-        const sectionId = location.hash.slice(1);
+        const sectionId = location.hash.slice(1); 
         if (document.getElementById(sectionId)) {
             setActiveLink(sectionId);
         }
     } else if (sections.length > 0) {
+        
         setActiveLink(sections[0].id);
     }
 
+    
     function setupSmoothScroll(elements) {
         elements.forEach(element => {
             element.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
 
+                
                 if (href && href.startsWith('#')) {
-                    e.preventDefault();
+                    e.preventDefault(); 
 
                     const targetSection = document.querySelector(href);
 
                     if (targetSection) {
+                        
                         targetSection.scrollIntoView({
                             behavior: 'smooth',
                             block: 'start'
@@ -1080,22 +1330,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    
     setupSmoothScroll(navLinks);
     setupSmoothScroll(ctaButtons);
 });
 </script>
 
-
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

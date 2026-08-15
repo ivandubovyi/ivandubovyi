@@ -4,10 +4,49 @@
     <!-- this is my personal website!! made by ivan dubovyi -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ivan Dubovyi</title>
+    <title>Ivan Dubovyi | Student, Coder, Athlete</title>
+    <meta name="description" content="The personal website of Ivan Dubovyi. My coding journey and projects, my story, refereeing, school, sports, and a photo gallery.">
+    <meta name="author" content="Ivan Dubovyi">
+    <link rel="canonical" href="https://ivandubovyi.com/">
+    <meta name="theme-color" content="#0f2135">
+
+    <!-- link preview card, so sharing the site doesn't show a bare url -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ivan Dubovyi">
+    <meta property="og:url" content="https://ivandubovyi.com/">
+    <meta property="og:title" content="Ivan Dubovyi | Student, Coder, Athlete">
+    <meta property="og:description" content="The personal website of Ivan Dubovyi. My coding journey and projects, my story, refereeing, school, sports, and a photo gallery.">
+    <meta property="og:image" content="https://ivandubovyi.com/og.jpg">
+    <meta property="og:image:width" content="900">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="Ivan Dubovyi">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ivan Dubovyi | Student, Coder, Athlete">
+    <meta name="twitter:description" content="The personal website of Ivan Dubovyi. My coding journey and projects, my story, refereeing, school, sports, and a photo gallery.">
+    <meta name="twitter:image" content="https://ivandubovyi.com/og.jpg">
+
+    <!-- display type: Sora for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f2135'/%3E%3Ctext x='32' y='44' font-family='Segoe UI,Tahoma,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EID%3C/text%3E%3C/svg%3E">
 
     <!-- add the js hook early so reveal content never stays hidden without javascript -->
     <script>document.documentElement.classList.add('js');</script>
+
+    <!-- set the theme before the first paint, otherwise the page flashes the
+         wrong colour for a frame on every load -->
+    <script>
+    (function () {
+        try {
+            var saved = localStorage.getItem('theme');
+            if (saved === 'light' || saved === 'dark') {
+                document.documentElement.setAttribute('data-theme', saved);
+            }
+        } catch (e) { /* private mode: fall back to the OS preference */ }
+    })();
+    </script>
 
     <style>
         :root {
@@ -935,6 +974,860 @@
             .timeline-item, .achievement-card, .skill-card { padding: 1.4rem; }
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           DESIGN LAYER
+           Adds a second accent colour (gold), a real gradient system across
+           every section, paper grain, display type, and numbered sections.
+           Everything below overrides the base styles above on purpose, so it
+           can be tuned or removed in one block.
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            /* blue was doing all the work on its own. gold gives the page a
+               second voice, and blue + gold is the flag I grew up under. */
+            --gold:       #f0b429;
+            --gold-soft:  #fdefc8;
+            --gold-deep:  #b5790a;
+
+            --font-head: 'Sora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-body: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1, h2, h3, .subtitle, .kicker, nav a, .cta-button, .coding-button,
+        .portfolio-card-link, .hero-badge { letter-spacing: -0.01em; }
+
+        h1, h2 { font-weight: 800; }
+        h3 { font-weight: 700; }
+
+        /* ── sections size to their content now, instead of every one being a
+              full viewport tall and leaving big empty gaps ── */
+        section {
+            min-height: 0;
+            padding: clamp(80px, 9vw, 130px) 22px clamp(80px, 9vw, 130px);
+            counter-increment: sec;
+            /* the nav wraps to two or three rows on narrower screens, so the
+               old 64px offset let section headings slide underneath it when
+               you clicked a nav link */
+            scroll-margin-top: 96px;
+        }
+        @media (max-width: 1150px) {
+            section { scroll-margin-top: 136px; }
+        }
+        #home { min-height: 100vh; padding-top: 96px; }
+        body { counter-reset: sec; }
+
+        /* ── numbered section labels ── */
+        .kicker { align-items: baseline; gap: 0.7rem; }
+        .kicker::before {
+            content: counter(sec, decimal-leading-zero);
+            width: auto; height: auto;
+            background: none;
+            border-radius: 0;
+            font-size: 0.95em;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--gold-deep);
+            padding-right: 0.7rem;
+            border-right: 2px solid var(--gold);
+            line-height: 1;
+        }
+
+        /* ── paper grain, so the large flat areas have some texture ── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           DARK CANVAS
+           Rebuilt after looking at Linear, Stripe, Brittany Chiang and
+           rauno.me. Not one of them uses a pale multi-hue wash spread over
+           every section, which is what this page had. They either go
+           near-monochrome dark (Linear, Chiang) or stay white with a single
+           bold saturated shape (Stripe, rauno).
+
+           This commits to the first: one continuous dark canvas for the whole
+           page, and exactly one saturated gradient object in the hero. Every
+           other section is plain dark, so the photos and project screenshots
+           carry the colour.
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            --bg:          #080f1a;
+            --surface:     #101c2e;
+            --surface-2:   #16243a;
+            --line:        rgba(255, 255, 255, 0.08);
+            --line-strong: rgba(255, 255, 255, 0.18);
+            --text:        #a9bccd;
+            --text-dim:    #7b91a6;
+            --head:        #ffffff;
+
+            /* The base stylesheet sets heading and body colour through these
+               three tokens in ~25 places, at a higher specificity than a plain
+               h2 rule. Remapping them here flips all of that text for the dark
+               canvas in one move. Verified none of the three is used as a
+               background or border anywhere, only as a text colour. */
+            --navy:  #ffffff;
+            --ink:   #a9bccd;
+            --muted: #7b91a6;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* one canvas: no section paints its own background any more */
+        #home, #coding, #portfolio, #story, #refereeing,
+        #school, #soccer, #gallery, #contact {
+            background: transparent;
+            color: var(--text);
+        }
+
+        h1, h2, h3 { color: var(--head); }
+        p, .description, .subtitle { color: var(--text); }
+        .kicker { color: var(--text-dim); }
+        .kicker::before { color: var(--gold); border-right-color: rgba(240, 180, 41, 0.5); }
+
+        /* ── the one gradient on the page ──
+           A single saturated object anchored to the top right of the hero,
+           with direction and an edge, rather than a wash sitting behind the
+           text. Everything below it is plain dark. */
+        #home::before {
+            content: '';
+            position: absolute;
+            top: -12%;
+            right: -14%;
+            width: 88vw;
+            height: 124%;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 48% 42% 50% 54%;
+            transform: rotate(-12deg);
+            background:
+                radial-gradient(50% 46% at 26% 26%, #2f6fb3 0%, transparent 70%),
+                radial-gradient(46% 42% at 54% 30%, #6d5bd0 0%, transparent 68%),
+                radial-gradient(44% 44% at 46% 72%, #f0b429 0%, transparent 66%),
+                radial-gradient(38% 36% at 74% 62%, #e0663f 0%, transparent 64%);
+            filter: blur(64px) saturate(1.3);
+            opacity: 0.72;
+            animation: drift 26s ease-in-out infinite;
+        }
+        /* the old halo was a light-theme trick and read as a white smudge on
+           dark. the gradient above is the glow now. */
+        .hero-photo-wrap::before { display: none; }
+        /* a single quiet echo far down the page so the dark never goes dead */
+        #gallery::before {
+            content: '';
+            position: absolute;
+            left: -14%;
+            bottom: -32%;
+            width: 62vw;
+            height: 84%;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, #2f6fb3 0%, transparent 66%);
+            filter: blur(74px);
+            opacity: 0.30;
+        }
+
+        /* the old pale blobs fought the new gradient */
+        .blob { display: none; }
+
+        .hero-spotlight {
+            background: radial-gradient(500px circle at var(--mx, 30%) var(--my, 40%),
+                        rgba(143, 201, 236, 0.10), transparent 70%);
+        }
+
+        /* ── type: bigger and more confident, the way all four references
+              handle a landing headline ── */
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.98;
+            letter-spacing: -0.035em;
+            color: var(--head);
+        }
+        .hero-content .subtitle { color: #cfe0ee; }
+        .hero-content .subtitle b { color: var(--gold); }
+        .hero-content .description { color: var(--text-dim); font-size: 1.12rem; }
+        .coding-text-content h2, .portfolio-header h2, .school-content h2,
+        .soccer-content h2, .gallery-content h2, .story-content h2 {
+            font-size: clamp(2.2rem, 4.6vw, 3.2rem);
+            letter-spacing: -0.03em;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line);
+            color: #cfe0ee;
+            box-shadow: none;
+            backdrop-filter: blur(8px);
+        }
+        .hero-image img { border: 1px solid var(--line-strong); }
+
+        /* ── nav: dark glass ── */
+        nav {
+            background: rgba(8, 15, 26, 0.72);
+            border-bottom: 1px solid var(--line);
+        }
+        nav.scrolled {
+            background: rgba(8, 15, 26, 0.92);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        nav a { color: var(--text-dim); }
+        nav a:hover { color: var(--head); background: rgba(255, 255, 255, 0.06); }
+        nav a.active { color: var(--head); background: rgba(255, 255, 255, 0.10); box-shadow: none; }
+        .scroll-progress {
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            box-shadow: 0 0 12px rgba(240, 180, 41, 0.4);
+        }
+
+        /* ── surfaces ── */
+        .portfolio-card, .achievement-card, .timeline-item, .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            box-shadow: none;
+        }
+        .portfolio-card:hover, .achievement-card:hover, .timeline-item:hover, .skill-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--line-strong);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+        }
+        .portfolio-card h3, .achievement-card h3, .timeline-item h3, .skill-card h3 { color: var(--head); }
+        .portfolio-card p, .achievement-card p, .timeline-item p, .skill-card p { color: var(--text-dim); }
+        .portfolio-card-body { background: transparent; }
+        .portfolio-card-media { background: var(--surface-2); }
+        .portfolio-card-link { color: var(--gold); }
+        .portfolio-card-link:hover { color: #ffc746; }
+        .portfolio-tag {
+            background: rgba(8, 15, 26, 0.82);
+            border: 1px solid var(--line-strong);
+            backdrop-filter: blur(6px);
+        }
+        .coding-image-container img, .story-image img {
+            border: 1px solid var(--line-strong);
+        }
+        .photo-item { border-radius: 12px; overflow: hidden; }
+
+        /* ── buttons: gold is the one action colour ── */
+        .cta-button {
+            background: var(--gold);
+            color: #241800;
+            box-shadow: none;
+            font-weight: 700;
+        }
+        .cta-button:hover { background: #ffc746; color: #241800; box-shadow: 0 14px 34px rgba(240, 180, 41, 0.28); }
+        .cta-button.ghost {
+            background: rgba(255, 255, 255, 0.04);
+            color: #cfe0ee;
+            border: 1px solid var(--line-strong);
+        }
+        .cta-button.ghost:hover { background: rgba(255, 255, 255, 0.10); border-color: var(--gold); color: var(--head); }
+        .coding-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line-strong);
+            color: #cfe0ee;
+        }
+        .coding-button:hover { border-color: var(--gold); color: var(--head); background: rgba(255, 255, 255, 0.10); }
+
+        /* ── contact ── */
+        #contact { text-align: center; }
+        #contact .kicker { justify-content: center; }
+        #contact h2 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -0.03em; }
+        #contact p { max-width: 560px; margin: 0 auto 2.4rem; font-size: 1.08rem; color: var(--text-dim); }
+        .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 15px 26px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-family: var(--font-head);
+            font-weight: 600;
+            font-size: 0.98rem;
+            border: 1px solid var(--line-strong);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cfe0ee;
+            transition: transform .25s ease, background .25s ease,
+                        border-color .25s ease, color .25s ease;
+        }
+        .contact-link svg { width: 19px; height: 19px; flex: 0 0 auto; display: block; }
+        .contact-link:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.10);
+            border-color: var(--gold);
+            color: var(--head);
+        }
+        .contact-link.primary {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #241800;
+        }
+        .contact-link.primary:hover { background: #ffc746; border-color: #ffc746; color: #241800; }
+
+        .site-footer {
+            background: transparent;
+            border-top: 1px solid var(--line);
+            color: var(--text-dim);
+            text-align: center;
+            padding: 2.2rem 22px;
+            font-size: 0.9rem;
+        }
+        .site-footer a { color: var(--gold); text-decoration: none; }
+        .site-footer a:hover { color: #ffc746; }
+
+        /* grain reads differently on dark */
+        body::after { opacity: 0.05; }
+
+        @media (max-width: 768px) {
+            section { padding: 76px 20px; }
+            #home::before { width: 150vw; right: -40%; opacity: 0.5; }
+            .contact-links { flex-direction: column; align-items: stretch; }
+            .contact-link { justify-content: center; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MICHAELTSIRAKIS LAYOUT
+           Structure and tokens taken from michaeltsirakis.com: near-black
+           oklch background, warm off-white text, Inter at tight tracking,
+           fully rounded pills, a floating top bar with a centred pill nav,
+           and a hero that sits bottom-left rather than centred.
+
+           The one thing that site does not have is photos in the hero, so
+           that part is ours: six of Ivan's own photos, scattered, animated
+           in on load, drifting, and moving with the cursor.
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            --bg:      oklch(0.14 0.02 250);
+            --fg:      oklch(0.97 0.012 90);
+            --fg-dim:  oklch(0.97 0.012 90 / 0.55);
+            --hair:    oklch(0.97 0.012 90 / 0.16);
+            --hair-2:  oklch(0.97 0.012 90 / 0.30);
+            --card:    oklch(0.97 0.012 90 / 0.04);
+
+            --font-head: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-body: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            --navy:  var(--fg);
+            --ink:   var(--fg);
+            --muted: var(--fg-dim);
+            --text:      var(--fg);
+            --text-dim:  var(--fg-dim);
+            --head:      #ffffff;
+            --line:        var(--hair);
+            --line-strong: var(--hair-2);
+            --surface:   oklch(0.19 0.02 250);
+            --surface-2: oklch(0.22 0.02 250);
+        }
+
+        body { background: var(--bg); color: var(--fg); }
+        h1, h2, h3 { letter-spacing: -0.03em; font-weight: 600; }
+
+        /* ── floating top bar ── */
+        nav { background: transparent; border-bottom: 0; padding: 1.1rem 0; }
+        nav.scrolled {
+            background: oklch(0.14 0.02 250 / 0.8);
+            backdrop-filter: blur(14px);
+            box-shadow: none;
+            padding: 0.7rem 0;
+        }
+        .nav-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .wordmark {
+            font-family: var(--font-head);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--fg);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+        .nav-pills { min-width: 0; flex: 0 1 auto; overflow-x: auto; scrollbar-width: none; }
+        .nav-pills::-webkit-scrollbar { display: none; }
+        .nav-pills ul {
+            display: flex;
+            align-items: center;
+            gap: 0.15rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            /* the base stylesheet wraps nav items; without nowrap this becomes
+               a three-row stack on a phone and forces horizontal overflow */
+            flex-wrap: nowrap;
+            width: max-content;
+            scrollbar-width: none;
+        }
+        .nav-pills ul::-webkit-scrollbar { display: none; }
+        nav a.nav-link {
+            display: block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--fg-dim);
+            white-space: nowrap;
+            background: transparent;
+            box-shadow: none;
+        }
+        nav a.nav-link::after { display: none; }
+        nav a.nav-link:hover { color: var(--fg); background: oklch(0.97 0.012 90 / 0.08); }
+        nav a.nav-link.active {
+            background: #ffffff;
+            color: oklch(0.14 0.02 250);
+            font-weight: 500;
+        }
+        .say-hi {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-family: var(--font-head);
+            text-decoration: none;
+            color: #fff;
+            background: oklch(0.97 0.012 90 / 0.10);
+            border: 1px solid var(--hair-2);
+            white-space: nowrap;
+            transition: background .25s ease;
+        }
+        .say-hi:hover { background: oklch(0.97 0.012 90 / 0.2); }
+        .scroll-progress { background: #ffffff; box-shadow: none; height: 2px; }
+
+        /* ── hero: bottom-left, like the reference ── */
+        #home {
+            align-items: flex-end;
+            min-height: 100vh;
+            padding: 120px 22px 72px;
+        }
+        #home::before { display: none; }
+        .hero-inner { position: relative; z-index: 3; max-width: 1320px; margin: 0 auto; width: 100%; }
+
+        .hero-inner h1 {
+            font-size: clamp(2.6rem, 7.4vw, 5.6rem);
+            line-height: 0.95;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin: 0 0 1.4rem;
+            color: #fff;
+        }
+        .hero-inner h1 .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+        .hero-inner h1 .line-in {
+            display: block;
+            transform: translateY(110%);
+            animation: lineUp 1s cubic-bezier(.16, 1, .3, 1) forwards;
+        }
+        .hero-inner h1 .line:nth-child(1) .line-in { animation-delay: 0.10s; }
+        .hero-inner h1 .line:nth-child(2) .line-in { animation-delay: 0.22s; }
+        .hero-inner h1 .dim { color: oklch(0.97 0.012 90 / 0.42); }
+        @keyframes lineUp { to { transform: translateY(0); } }
+
+        .hero-lede {
+            max-width: 34rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--fg-dim);
+            margin: 0 0 1.8rem;
+            opacity: 0;
+            animation: fadeUp .9s cubic-bezier(.16, 1, .3, 1) .42s forwards;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp .9s cubic-bezier(.16, 1, .3, 1) .54s forwards;
+        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+        /* ── pills ── */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-family: var(--font-head);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform .25s ease, background .25s ease,
+                        border-color .25s ease, color .25s ease;
+        }
+        .pill-solid { background: #ffffff; color: oklch(0.14 0.02 250); border: 1px solid #fff; }
+        .pill-solid:hover { transform: translateY(-2px); background: #e9e6e0; border-color: #e9e6e0; }
+        .pill-ghost { background: transparent; color: #fff; border: 1px solid var(--hair-2); }
+        .pill-ghost:hover { transform: translateY(-2px); background: oklch(0.97 0.012 90 / 0.10); }
+        .pill-arrow { transition: transform .25s ease; }
+        .pill:hover .pill-arrow { transform: translateY(2px); }
+
+        /* ═══ the animated hero photos ═══
+           Three nested layers so the transforms never fight:
+             .hero-photo  → cursor parallax (set from JS)
+             .hp-float    → slow idle drift
+             .hp-inner    → entrance animation + the card's resting tilt      */
+        .hero-photos {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .hero-photo {
+            position: absolute;
+            width: var(--w);
+            transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+            transition: transform .6s cubic-bezier(.2, .7, .2, 1);
+            will-change: transform;
+        }
+        .hp-float {
+            display: block;
+            animation: hpFloat var(--float) ease-in-out infinite;
+            animation-delay: var(--delay);
+        }
+        .hp-inner {
+            display: block;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid oklch(0.97 0.012 90 / 0.14);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+            opacity: 0;
+            transform: rotate(var(--rot)) translateY(34px) scale(0.92);
+            animation: hpIn 1.1s cubic-bezier(.16, 1, .3, 1) forwards;
+            animation-delay: var(--delay);
+            background: var(--surface);
+        }
+        .hero-photo img { width: 100%; height: auto; display: block; }
+        @keyframes hpIn {
+            to { opacity: 1; transform: rotate(var(--rot)) translateY(0) scale(1); }
+        }
+        @keyframes hpFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-14px); }
+        }
+
+        /* scatter: kept clear of the bottom-left headline */
+        .hero-photo.p1 { --w: 14vw;   --rot: -7deg; --float: 9s;  --delay: .30s; top: 13%; left: 29%; }
+        .hero-photo.p2 { --w: 13vw;   --rot: 5deg;  --float: 11s; --delay: .44s; top: 11%; left: 48%; }
+        .hero-photo.p3 { --w: 14vw;   --rot: -4deg; --float: 10s; --delay: .58s; top: 15%; left: 66%; }
+        .hero-photo.p4 { --w: 12vw;   --rot: 7deg;  --float: 12s; --delay: .72s; top: 42%; left: 83%; }
+
+        /* soft fade at the very top so a drifting photo never hard-clips
+           against the section edge or collides with the floating nav */
+        .hero-photos {
+            -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 100%);
+            mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 100%);
+        }
+
+        .hero-spotlight {
+            z-index: 0;
+            background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 40%),
+                        oklch(0.97 0.012 90 / 0.06), transparent 70%);
+        }
+
+        /* ── the rest of the page, matched to the same tokens ── */
+        .portfolio-card, .achievement-card, .timeline-item, .skill-card {
+            background: var(--card);
+            border: 1px solid var(--hair);
+            border-radius: 16px;
+        }
+        .portfolio-card:hover, .achievement-card:hover,
+        .timeline-item:hover, .skill-card:hover {
+            border-color: var(--hair-2);
+            background: oklch(0.97 0.012 90 / 0.07);
+            box-shadow: none;
+            transform: translateY(-4px);
+        }
+        .portfolio-card-link { color: #fff; }
+        .portfolio-card-link:hover { color: var(--fg-dim); }
+        .portfolio-tag {
+            background: oklch(0.14 0.02 250 / 0.75);
+            border: 1px solid var(--hair-2);
+        }
+        .cta-button, .contact-link.primary {
+            background: #ffffff;
+            color: oklch(0.14 0.02 250);
+            border: 1px solid #fff;
+            border-radius: 999px;
+            box-shadow: none;
+        }
+        .cta-button:hover, .contact-link.primary:hover {
+            background: #e9e6e0; border-color: #e9e6e0; color: oklch(0.14 0.02 250); box-shadow: none;
+        }
+        .cta-button.ghost, .coding-button, .contact-link {
+            border-radius: 999px;
+            border: 1px solid var(--hair-2);
+            background: transparent;
+            color: #fff;
+        }
+        .cta-button.ghost:hover, .coding-button:hover, .contact-link:hover {
+            background: oklch(0.97 0.012 90 / 0.10);
+            border-color: var(--hair-2);
+            color: #fff;
+        }
+        .kicker::before { color: var(--fg-dim); border-right-color: var(--hair); }
+        .kicker { color: var(--fg-dim); }
+        .site-footer { border-top: 1px solid var(--hair); color: var(--fg-dim); }
+        .site-footer a { color: #fff; }
+        .site-footer a:hover { color: var(--fg-dim); }
+        #gallery::before { display: none; }
+        .photo-item { border-radius: 14px; }
+
+        @media (max-width: 1024px) {
+            .hero-photo.p1 { --w: 19vw; top: 11%; left: 5%; }
+            .hero-photo.p2 { --w: 18vw; top: 8%;  left: 29%; }
+            .hero-photo.p3 { --w: 19vw; top: 13%; left: 52%; }
+            .hero-photo.p4 { --w: 17vw; top: 9%;  left: 77%; }
+        }
+        @media (max-width: 640px) {
+            .nav-inner { gap: 0.5rem; padding: 0 14px; }
+            .wordmark { font-size: 0.95rem; }
+            .say-hi { padding: 6px 11px; font-size: 0.8rem; }
+            #home { padding: 100px 20px 56px; }
+            .hero-inner h1 { font-size: clamp(1.85rem, 8.6vw, 3rem); }
+            .hero-photo.p1 { --w: 31vw; top: 12%; left: 2%; }
+            .hero-photo.p2 { --w: 28vw; top: 22%; left: 37%; }
+            .hero-photo.p3 { --w: 30vw; top: 11%; left: 67%; }
+            .hero-photo.p4 { display: none; }
+            .hero-actions { width: 100%; }
+            .pill { flex: 1 1 auto; justify-content: center; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LIGHT / DARK
+           Dark is the default. Light values are lifted from the reference's
+           own light mode: pure white ground, the same near-black used as the
+           dark background now used as the text colour, and oklch(0.88 0.01 250)
+           hairlines.
+
+           Two selectors drive it: the OS preference when the visitor has not
+           chosen, and data-theme on <html> once they click the toggle.
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            /* filled buttons are an inverted pair, so they need their own
+               tokens rather than hard-coded white/near-black */
+            --solid-bg:  #ffffff;
+            --solid-fg:  oklch(0.14 0.02 250);
+            --bg-blur:   oklch(0.14 0.02 250 / 0.80);
+            --photo-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+            --grain:     0.05;
+            --glow:      oklch(0.97 0.012 90 / 0.06);
+            --head-dim:  oklch(0.97 0.012 90 / 0.42);
+            --solid-hover: #e9e6e0;
+        }
+
+        :root[data-theme="light"] {
+            --bg:      oklch(1 0 0);
+            --fg:      oklch(0.14 0.02 250);
+            --fg-dim:  oklch(0.14 0.02 250 / 0.62);
+            --hair:    oklch(0.88 0.01 250);
+            --hair-2:  oklch(0.80 0.01 250);
+            --card:    oklch(0.14 0.02 250 / 0.025);
+            --surface:   oklch(0.985 0.002 250);
+            --surface-2: oklch(0.955 0.004 250);
+            --head:      oklch(0.14 0.02 250);
+            --navy:      oklch(0.14 0.02 250);
+            --ink:       oklch(0.14 0.02 250);
+            --muted:     oklch(0.14 0.02 250 / 0.62);
+            --text:      oklch(0.14 0.02 250);
+            --text-dim:  oklch(0.14 0.02 250 / 0.62);
+            --line:        oklch(0.88 0.01 250);
+            --line-strong: oklch(0.80 0.01 250);
+            --solid-bg:  oklch(0.14 0.02 250);
+            --solid-fg:  #ffffff;
+            --bg-blur:   oklch(1 0 0 / 0.82);
+            --photo-shadow: 0 20px 46px rgba(15, 25, 40, 0.18);
+            --grain:     0.028;
+            --glow:      oklch(0.14 0.02 250 / 0.05);
+            --head-dim:  oklch(0.14 0.02 250 / 0.42);
+            --solid-hover: oklch(0.28 0.02 250);
+        }
+
+        /* everything that was pinned to a literal colour now follows the token */
+        html { background: var(--bg); }
+        body { background: var(--bg); color: var(--fg); }
+        body::after { opacity: var(--grain); }
+        h1, h2, h3 { color: var(--head); }
+        .hero-inner h1 { color: var(--head); }
+        .hero-inner h1 .dim { color: var(--head-dim); }
+        .hero-spotlight { background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 40%), var(--glow), transparent 70%); }
+
+        nav.scrolled { background: var(--bg-blur); }
+        nav a.nav-link { color: var(--fg-dim); }
+        nav a.nav-link:hover { color: var(--fg); background: var(--card); }
+        nav a.nav-link.active { background: var(--solid-bg); color: var(--solid-fg); }
+        .wordmark { color: var(--fg); }
+        .say-hi { color: var(--fg); background: var(--card); border-color: var(--hair-2); }
+        .say-hi:hover { background: var(--hair); }
+        .scroll-progress { background: var(--fg); }
+
+        .pill-solid, .cta-button, .contact-link.primary {
+            background: var(--solid-bg); color: var(--solid-fg); border-color: var(--solid-bg);
+        }
+        .pill-solid:hover, .cta-button:hover, .contact-link.primary:hover {
+            background: var(--solid-hover);
+            border-color: var(--solid-hover);
+            color: var(--solid-fg);
+        }
+        .pill-ghost, .cta-button.ghost, .coding-button, .contact-link {
+            color: var(--fg); border-color: var(--hair-2); background: transparent;
+        }
+        .pill-ghost:hover, .cta-button.ghost:hover, .coding-button:hover, .contact-link:hover {
+            background: var(--card); color: var(--fg); border-color: var(--hair-2);
+        }
+        .portfolio-card-link, .site-footer a { color: var(--fg); }
+        .portfolio-card-link:hover, .site-footer a:hover { color: var(--fg-dim); }
+        .portfolio-tag { background: var(--bg-blur); color: var(--fg); border-color: var(--hair-2); }
+        .hp-inner { box-shadow: var(--photo-shadow); border-color: var(--hair-2); }
+        .hero-badge { background: var(--card); border-color: var(--hair); color: var(--fg); }
+
+        /* Section-scoped rules further up still pin text to white or pale blue
+           for what used to be dark-only sections. Those beat a plain h2/p rule
+           on specificity, so in light mode they rendered as near-invisible text
+           on white. These restate them through the tokens. */
+        .coding-text-content h2, #refereeing h2, #contact h2 { color: var(--head); }
+        .coding-text-content p, #refereeing p, #contact p { color: var(--fg-dim); }
+        .coding-text-content p b { color: var(--fg); }
+        #coding .kicker, #refereeing .kicker, #contact .kicker { color: var(--fg-dim); }
+        #coding .kicker::before, #refereeing .kicker::before, #contact .kicker::before {
+            color: var(--fg-dim);
+            border-right-color: var(--hair);
+        }
+        .hero-content .subtitle { color: var(--fg); }
+        .skill-card h3, .portfolio-card h3, .achievement-card h3, .timeline-item h3 { color: var(--head); }
+        .skill-card p, .portfolio-card p, .achievement-card p, .timeline-item p { color: var(--fg-dim); }
+        .cta-button.ghost, .coding-button, .contact-link { color: var(--fg); }
+        #refereeing .story-image img, .coding-image-container img, .story-image img {
+            border-color: var(--hair-2);
+        }
+
+        /* ── the toggle itself ── */
+        .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .theme-toggle {
+            display: inline-grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 999px;
+            border: 1px solid var(--hair-2);
+            background: var(--card);
+            color: var(--fg);
+            cursor: pointer;
+            transition: background .25s ease, border-color .25s ease, color .25s ease;
+        }
+        .theme-toggle:hover { background: var(--hair); }
+        .theme-toggle svg { width: 17px; height: 17px; display: block; }
+        /* dark mode offers the sun (switch to light); light offers the moon */
+        .theme-toggle .icon-moon { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+        @media (max-width: 640px) {
+            .nav-actions { gap: 0.35rem; }
+            .theme-toggle { width: 32px; height: 32px; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FLOATING NAV
+           The wordmark is gone and the bar no longer spans the window. The
+           menu is a single detached capsule that hovers over the page.
+           ═══════════════════════════════════════════════════════════════ */
+
+        nav {
+            top: 16px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            padding: 0;
+            background: transparent;
+            border-bottom: 0;
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            /* the bar is full width but only the capsule should catch clicks,
+               otherwise it blocks the top strip of the hero */
+            pointer-events: none;
+        }
+        nav.scrolled {
+            top: 10px;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .nav-inner {
+            pointer-events: auto;
+            width: max-content;
+            max-width: calc(100% - 24px);
+            margin: 0 auto;
+            padding: 6px 6px 6px 10px;
+            gap: 0.4rem;
+            border-radius: 999px;
+            background: var(--bg-blur);
+            border: 1px solid var(--hair);
+            backdrop-filter: blur(18px) saturate(1.5);
+            -webkit-backdrop-filter: blur(18px) saturate(1.5);
+            box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+            transition: box-shadow .3s ease, transform .3s ease;
+        }
+        nav.scrolled .nav-inner {
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+        }
+        :root[data-theme="light"] .nav-inner {
+            box-shadow: 0 10px 30px rgba(15, 25, 40, 0.12);
+        }
+        :root[data-theme="light"] nav.scrolled .nav-inner {
+            box-shadow: 0 14px 36px rgba(15, 25, 40, 0.18);
+        }
+
+        .nav-actions { gap: 0.4rem; }
+        /* a hairline between the links and the actions inside the capsule */
+        .nav-actions::before {
+            content: '';
+            width: 1px;
+            height: 20px;
+            background: var(--hair);
+            margin-right: 0.15rem;
+            flex: 0 0 auto;
+        }
+
+        /* the nav is shorter now that it never wraps, so anchor jumps need
+           less clearance than the old three-row bar did */
+        section { scroll-margin-top: 92px; }
+        @media (max-width: 1150px) {
+            section { scroll-margin-top: 92px; }
+        }
+
+        @media (max-width: 640px) {
+            nav { top: 10px; }
+            nav.scrolled { top: 6px; }
+            .nav-inner {
+                max-width: calc(100% - 16px);
+                padding: 5px 5px 5px 8px;
+            }
+            .say-hi { padding: 6px 10px; font-size: 0.78rem; }
+            .nav-actions::before { height: 18px; }
+        }
+
         /* ── respect reduced motion ── */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -943,6 +1836,14 @@
                 scroll-behavior: auto !important;
             }
             html.js .reveal { opacity: 1; transform: none; }
+
+            /* The rules above kill every animation, and the hero headline and
+               photos start from a hidden state that only their animation
+               undoes. Without these three lines they would stay invisible
+               forever for anyone who prefers reduced motion. */
+            .hero-inner h1 .line-in { transform: none !important; }
+            .hero-lede, .hero-actions { opacity: 1 !important; transform: none !important; }
+            .hp-inner { opacity: 1 !important; transform: rotate(var(--rot)) !important; }
         }
     </style>
 </head>
@@ -950,37 +1851,58 @@
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <nav>
-        <ul>
-            <li><a href="#home" class="nav-link active">Home</a></li>
-            <li><a href="#coding" class="nav-link">Coding</a></li>
-            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-            <li><a href="#story" class="nav-link">My Story</a></li>
-            <li><a href="#refereeing" class="nav-link">Refereeing</a></li>
-            <li><a href="#school" class="nav-link">School</a></li>
-            <li><a href="#soccer" class="nav-link">Sports</a></li>
-            <li><a href="#gallery" class="nav-link">Gallery</a></li>
-        </ul>
+        <div class="nav-inner">
+            <div class="nav-pills">
+                <ul>
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#coding" class="nav-link">Coding</a></li>
+                    <li><a href="#portfolio" class="nav-link">Work</a></li>
+                    <li><a href="#story" class="nav-link">Story</a></li>
+                    <li><a href="#refereeing" class="nav-link">Refereeing</a></li>
+                    <li><a href="#school" class="nav-link">School</a></li>
+                    <li><a href="#soccer" class="nav-link">Sports</a></li>
+                    <li><a href="#gallery" class="nav-link">Photos</a></li>
+                </ul>
+            </div>
+            <div class="nav-actions">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to light mode">
+                    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 2.4v2.3M12 19.3v2.3M4.2 12H1.9M22.1 12h-2.3M5.8 5.8 4.2 4.2M19.8 19.8l-1.6-1.6M18.2 5.8l1.6-1.6M4.2 19.8l1.6-1.6"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6z"
+                              fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <a href="#contact" class="say-hi">Say Hi &#128075;</a>
+            </div>
+        </div>
     </nav>
 
     <section id="home">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
+        <div class="hero-spotlight" id="heroSpotlight"></div>
+
+        <!-- the photos, scattered and animated in -->
+        <div class="hero-photos" id="heroPhotos" aria-hidden="true">
+            <figure class="hero-photo p1"><span class="hp-float"><span class="hp-inner"><img src="hero/n1.jpg" alt="" width="390" height="520" fetchpriority="high" decoding="async"></span></span></figure>
+            <figure class="hero-photo p2"><span class="hp-float"><span class="hp-inner"><img src="hero/n2.jpg" alt="" width="390" height="520" fetchpriority="high" decoding="async"></span></span></figure>
+            <figure class="hero-photo p3"><span class="hp-float"><span class="hp-inner"><img src="hero/n3.jpg" alt="" width="390" height="520" fetchpriority="high" decoding="async"></span></span></figure>
+            <figure class="hero-photo p4"><span class="hp-float"><span class="hp-inner"><img src="hero/n4.jpg" alt="" width="390" height="520" fetchpriority="high" decoding="async"></span></span></figure>
+        </div>
+
         <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <span class="hero-badge reveal"><span class="dot"></span> Welcome to my corner of the internet</span>
-                    <h1 class="reveal">Ivan Dubovyi</h1>
-                    <div class="subtitle reveal">Student <b>&bull;</b> Coder <b>&bull;</b> Athlete</div>
-                    <p class="description reveal">Hey everyone! My name is, you guessed it - Ivan Dubovyi. I am a teenager, soon to be a man, born in the big '11, in a hot month of June. I have big, I dare to say massive ambitions in the areas of coding and soccer. Though those two things are very different from each other, for the past years, I've been trying to combine these fields. In this website, I sum up on my process done already, though there is way more to go!</p>
-                    <div class="cta-buttons reveal">
-                        <a href="#coding" class="cta-button">My Coding Journey <span class="arrow">&rarr;</span></a>
-                        <a href="#story" class="cta-button ghost">Discover My Story</a>
-                    </div>
-                </div>
-                <div class="hero-image reveal">
-                    <div class="hero-photo-wrap">
-                        <img src="IMG_4027.JPG" alt="Ivan Dubovyi">
-                    </div>
+            <div class="hero-inner">
+                <h1>
+                    <span class="line"><span class="line-in">Ivan Dubovyi.</span></span>
+                    <span class="line"><span class="line-in dim">Student, coder, athlete.</span></span>
+                </h1>
+                <p class="hero-lede">Teenager building things for the web, refereeing soccer on the weekends,
+                    and trying to get better at both. Born in Ukraine, based in the US.</p>
+                <div class="hero-actions">
+                    <a href="#portfolio" class="pill pill-solid">View my work <span class="pill-arrow">&darr;</span></a>
+                    <a href="#story" class="pill pill-ghost">About me</a>
                 </div>
             </div>
         </div>
@@ -999,7 +1921,7 @@
                     <p class="reveal">On the right, you can see a small part of my code, that I made using JavaScript. If you're an expert, and you wanna check out more of my work - just click the button. You will be sent straight to my personal GitHub account, where you can look through my work.</p>
                 </div>
                 <div class="coding-image-container reveal">
-                    <img src="code.png" alt="Ivan coding" style="object-position: center 20%">
+                    <img loading="lazy" decoding="async" src="code.png" alt="Ivan coding" style="object-position: center 20%">
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 1.5rem;">
                         <a href="https://github.com/ivandubovyi" class="coding-button">View GitHub &#8599;</a>
                         <a href="https://ivandubovyi.github.io/cartsimulation/index.html" class="coding-button">Science Project &#8599;</a>
@@ -1011,11 +1933,11 @@
             <div class="skills-grid">
                 <div class="skill-card reveal">
                     <h3>Scratch</h3>
-                    <p>My first programming languages! I love creating beautiful, responsive websites and learning new CSS tricks every day.</p>
+                    <p>My first programming language. I spent 100 hours on it between ages 8 and 10, and it is where I learned how loops, events, and logic actually fit together.</p>
                 </div>
                 <div class="skill-card reveal">
                     <h3>HTML & CSS</h3>
-                    <p>HTML & CSS are fundamental languages in my coding carrer. I use those two everyday I work with my code, especially if I'm working on creating websites.</p>
+                    <p>HTML & CSS are fundamental languages in my coding career. I use those two everyday I work with my code, especially if I'm working on creating websites.</p>
                 </div>
                 <div class="skill-card reveal">
                     <h3>JavaScript</h3>
@@ -1023,7 +1945,7 @@
                 </div>
                 <div class="skill-card reveal">
                     <h3>Python</h3>
-                    <p>I recently started learning and using this Python. It has been one of the most challenging, though interesting languages I've ever learned.</p>
+                    <p>I recently started learning and using Python. It has been one of the most challenging, though interesting languages I've ever learned.</p>
                 </div>
             </div>
         </div>
@@ -1043,7 +1965,7 @@
                 <!-- Slot 1 — Algebridge -->
                 <article class="portfolio-card reveal">
                     <div class="portfolio-card-media">
-                        <img src="algebridge.png" alt="Algebridge homepage" class="portfolio-card-screenshot">
+                        <img loading="lazy" decoding="async" src="algebridge.png" alt="Algebridge homepage" class="portfolio-card-screenshot">
                         <span class="portfolio-tag">Ed-tech &middot; Founder</span>
                     </div>
                     <div class="portfolio-card-body">
@@ -1056,12 +1978,12 @@
                 <!-- Slot 2 — Somba -->
                 <article class="portfolio-card reveal">
                     <div class="portfolio-card-media">
-                        <img src="somba.png" alt="Somba landing page" class="portfolio-card-screenshot">
+                        <img loading="lazy" decoding="async" src="somba.png" alt="Somba landing page" class="portfolio-card-screenshot">
                         <span class="portfolio-tag">Social &middot; Web</span>
                     </div>
                     <div class="portfolio-card-body">
                         <h3>Somba</h3>
-                        <p>Somba is an invite-only social network built for young builders, people who care more about the work than the follower count. Right now the site is the founding-member gate: a live countdown to launch and a waitlist where the first 1,000 people lock in permanent founding status. The whole idea is people over followers, work over performance, and small close networks instead of endless feeds.</p>
+                        <p>Somba is a network for ambitious teenagers, built around collaborators instead of followers. Think LinkedIn, but for teen builders: you apply to join, and members gather in small groups called Nets rather than one endless feed. The whole idea is people over followers, work over performance, and small close networks.</p>
                         <a href="https://somba.dev" class="portfolio-card-link" target="_blank" rel="noopener">Visit Somba <span class="arrow">&#8599;</span></a>
                     </div>
                 </article>
@@ -1069,7 +1991,7 @@
                 <!-- Slot 3 — Sign Reader -->
                 <article class="portfolio-card reveal">
                     <div class="portfolio-card-media">
-                        <img src="sign-translator.png" alt="Sign Reader app" class="portfolio-card-screenshot">
+                        <img loading="lazy" decoding="async" src="sign-translator.png" alt="Sign Reader app" class="portfolio-card-screenshot">
                         <span class="portfolio-tag">Vision &middot; Web</span>
                     </div>
                     <div class="portfolio-card-body">
@@ -1094,7 +2016,7 @@
                     <p class="reveal">I found interests in coding and soccer. Coding was always close to me - I started with the easiest languages, and then moved up the ranks. While sitting in the computer all day was interesting, I also wanted to play outside and talk to people. Soccer - satisfied all the checks on my checklist, and it easily became a gigantic part of my life</p>
                 </div>
                 <div class="story-image reveal">
-                    <img src="coding1.jpg" alt="Ivan working on project">
+                    <img loading="lazy" decoding="async" src="coding1.jpg" alt="Ivan working on project">
                     <p><em>Me working on Scratch, 8 years old</em></p>
                 </div>
             </div>
@@ -1112,7 +2034,7 @@
                     <p class="reveal">As of November 2025, I refereed over 20 games, from ages u8 to u18. I worked as an assistant referee, and as the center referee, and I don't plan to stop. Now, being a referee is a lifestyle for me. I can be a part of the game, while also making key decisions. That's what I love the most about refereeing.</p>
                 </div>
                 <div class="story-image reveal">
-                    <img src="IMG_0972.JPG" alt="Referee">
+                    <img loading="lazy" decoding="async" src="IMG_0972.JPG" alt="Referee">
                 </div>
             </div>
         </div>
@@ -1127,12 +2049,12 @@
 
                 <div class="school-timeline">
                     <div class="timeline-item reveal">
-                        <img src="1stclass.jpg" alt="Elementary School" style="object-position: center top">
+                        <img loading="lazy" decoding="async" src="1stclass.jpg" alt="Elementary School" style="object-position: center top">
                         <h3>Elementary Years (2018-2023)</h3>
                         <p>I started my school career in 2018. I went to 1st grade at Elementary School No. 3, in my home city of Melitopol. There, I gained basic knowledge about Math, English, and Science. I won a couple awards as well. I won 2 math contests, and reader's contest - where you have to write a poem, memorize it, and perform it in front of the judges. When I moved to the US, I started out in the Castle Hills Elementary. I'm really grateful for that school for helping me adapt in the US with barely any knowledge of English. Every teacher was very helpful, and I'm thankful for everyone who helped me on my journey in that school.</p>
                     </div>
                     <div class="timeline-item reveal">
-                        <img src="IMG_1214.JPG" alt="Middle School" style="object-position: center top">
+                        <img loading="lazy" decoding="async" src="IMG_1214.JPG" alt="Middle School" style="object-position: center top">
                         <h3>Middle School (2023-2026)</h3>
                         <p>After 5th grade, I went to the Middle School Honors Academy at Christiana High School. I had to go through a selection: doing a special test, getting recommendations from my teachers, and even recording a video about my skills. Though it was hard to get in, especially with minimal knowledge of English, I tried my best, and got into the school. Throughout all 3 years at this school, I maintained A's or high B's. I participated in Soccer in 7th and 8th grade, did Math League in 7th and 8th grade, and always tried to involve myself, not only in classes, but in other different activities and extracurriculars.</p>
                     </div>
@@ -1150,17 +2072,17 @@
 
                 <div class="achievements-grid">
                     <div class="achievement-card reveal">
-                        <img src="karatesuit2.jpg" alt="Soccer Team" style="object-position: center 18%">
+                        <img loading="lazy" decoding="async" src="karatesuit2.jpg" alt="Soccer Team" style="object-position: center 18%">
                         <h3>Karate</h3>
                         <p>Karate has been the first sport I've ever tried. I realized - it's boring to just sit infront of computer the whole time, so I tried something new. I've done karate for 2 years, but then something clicked. Karate became boring, I wasn't interested anymore. So, I moved on, to a different sport, where I can talk and communicate with people.</p>
                     </div>
                     <div class="achievement-card reveal">
-                        <img src="IMG_5170.JPG" alt="Trophy" style="object-position: center 32%">
+                        <img loading="lazy" decoding="async" src="IMG_5170.JPG" alt="Trophy" style="object-position: center 32%">
                         <h3>Soccer in YMCA</h3>
                         <p>YMCA was the place where my soccer career truly kicked off. I started training twice a week solo, and once with a team, and having games every weekend. I started really enjoying soccer, as it was something that would release my energy and bring me joy at the same time</p>
                     </div>
                     <div class="achievement-card reveal">
-                        <img src="IMG_0599.JPG" alt="Training" style="object-position: center 30%">
+                        <img loading="lazy" decoding="async" src="IMG_0599.JPG" alt="Training" style="object-position: center 30%">
                         <h3>Soccer in Honors Academy</h3>
                         <p>At my school, Honors Academy, I've played 2 seasons. In 7th grade, I tried out for the team and successfully made it in. It was a really fun and interesting experience playing at a Middle School level, as I got a lot of experience, got to know 6th and 8th graders, and made a lot of new friends. In 8th grade, it was an even better experience, as I was more prepared and skilful. Overall, it was one of the best experiences in my life playing with this team!</p>
                     </div>
@@ -1177,25 +2099,68 @@
                 <p class="reveal">Here are some memorable moments from my coding projects, soccer games, and school activities. Tap any photo to open it up.</p>
 
                 <div class="photo-grid" id="photoGrid">
-                    <div class="photo-item reveal"><img src="ukraine.jpg" alt="Back home in Ukraine"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="tripp.jpg" alt="On a trip"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="scratchcomp.jpg" alt="Scratch competition"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="young1.jpg" alt="Younger days"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="karateshopping.jpg" alt="Karate days"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="beach.jpg" alt="Beach day"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="mancity1.jpg" alt="At a Man City match"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="chickfila1.jpg" alt="Out with friends"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="IMG_4027.JPG" alt="A good day"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="IMG_6140.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="gladiator.jpg" alt="Game face"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="IMG_9959.JPG" alt="A great memory"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="IMG_3135.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="IMG_0990.JPG" alt="On the field"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img src="IMG_5436.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="ukraine.jpg" alt="Back home in Ukraine"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="tripp.jpg" alt="On a trip"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="scratchcomp.jpg" alt="Scratch competition"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="young1.jpg" alt="Younger days"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="karateshopping.jpg" alt="Karate days"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="beach.jpg" alt="Beach day"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="mancity1.jpg" alt="At a Man City match"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="chickfila1.jpg" alt="Out with friends"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_4027.JPG" alt="A good day"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_6140.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="gladiator.jpg" alt="Game face"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_9959.JPG" alt="A great memory"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_3135.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_0990.JPG" alt="On the field"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_5436.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- ── Contact Section ── -->
+    <section id="contact">
+        <div class="container">
+            <span class="kicker reveal" style="display:inline-flex;">Get in touch</span>
+            <h2 class="reveal">Say hello</h2>
+            <p class="reveal">If you want to talk about code, soccer, or anything I've built here, I'd like to hear from you.</p>
+
+            <div class="contact-links reveal">
+                <a class="contact-link primary" href="mailto:ivan.malchugan@gmail.com">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M3.2 7.2 12 13.2l8.8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Email me
+                </a>
+                <a class="contact-link" href="https://instagram.com/ivandubovyii" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="17.6" cy="6.4" r="1.4" fill="currentColor"/>
+                    </svg>
+                    Instagram
+                </a>
+                <a class="contact-link" href="https://www.linkedin.com/in/ivan-dubovyi-a71368429/" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+                <a class="contact-link" href="https://github.com/ivandubovyi" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <p>Built and coded by Ivan Dubovyi. <a href="https://github.com/ivandubovyi" target="_blank" rel="noopener">Source on GitHub</a></p>
+    </footer>
 
     <!-- ── Lightbox ── -->
     <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo viewer">
@@ -1325,6 +2290,56 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (e.key === 'ArrowRight') showPhoto(current + 1);
         else if (e.key === 'ArrowLeft') showPhoto(current - 1);
     });
+
+    /* ── light / dark toggle ── */
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+        const root = document.documentElement;
+        // the reference site ships dark and ignores the OS setting, so this
+        // does the same: dark unless the visitor has chosen light before
+        const current = () => root.getAttribute('data-theme') || 'dark';
+
+        const label = () => {
+            themeBtn.setAttribute('aria-label',
+                current() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        };
+        label();
+
+        themeBtn.addEventListener('click', () => {
+            const next = current() === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) { /* private mode */ }
+            label();
+        });
+    }
+
+    /* ── hero glow follows the cursor (pointer devices only) ── */
+    const spotlight = document.getElementById('heroSpotlight');
+    const home = document.getElementById('home');
+    if (spotlight && home && window.matchMedia('(hover: hover) and (pointer: fine)').matches
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const photos = [...document.querySelectorAll('.hero-photo')];
+        let queued = false, mx = 0, my = 0;
+        home.addEventListener('mousemove', (e) => {
+            const r = home.getBoundingClientRect();
+            mx = ((e.clientX - r.left) / r.width) * 100;
+            my = ((e.clientY - r.top) / r.height) * 100;
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(() => {
+                spotlight.style.setProperty('--mx', mx + '%');
+                spotlight.style.setProperty('--my', my + '%');
+                // each photo shifts by a different amount, so the scatter
+                // gets a sense of depth as the cursor moves
+                photos.forEach((el, i) => {
+                    const depth = 8 + i * 5;
+                    el.style.setProperty('--px', (((mx - 50) / 50) * depth).toFixed(1) + 'px');
+                    el.style.setProperty('--py', (((my - 50) / 50) * depth * 0.6).toFixed(1) + 'px');
+                });
+                queued = false;
+            });
+        });
+    }
 });
     </script>
 

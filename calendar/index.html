@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a meeting with Ivan Dubovyi</title>
+<meta name="description" content="Pick a time that works for you and book a meeting with Ivan Dubovyi. Times shown in your own timezone.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+<style>
+  :root{
+    --accent:#0069ff;
+    --accent-dark:#0053cc;
+    --accent-soft:#eff6ff;
+    --ink:#1a1a1a;
+    --ink-2:#4d5055;
+    --muted:#85868a;
+    --line:#e0e0e0;
+    --line-2:#d6d6d6;
+    --ok:#0a8050;
+    --danger:#c62828;
+    --radius:8px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
+  html,body{height:100%}
+  body{
+    font-family:var(--font);
+    background:#f8f8f8;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;
+    min-height:100vh;
+  }
+  button{font-family:inherit}
+
+  .wrap{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;min-width:0}
+
+  .card{
+    width:100%;max-width:1040px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:0 1px 6px rgba(0,0,0,.08);
+    display:grid;
+    grid-template-columns:340px 1fr;
+    min-height:600px;
+    overflow:hidden;
+  }
+  .card.has-slots{grid-template-columns:300px 1fr 260px}
+
+  /* ── left summary panel ── */
+  .side{padding:32px;border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .back{
+    width:36px;height:36px;border-radius:50%;border:none;background:transparent;
+    color:var(--accent);cursor:pointer;display:none;align-items:center;justify-content:center;
+    margin:-8px 0 12px -8px;font-size:20px;
+  }
+  .back:hover{background:var(--accent-soft)}
+  .back.show{display:flex}
+  .avatar{
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(135deg,#0069ff,#3b82f6);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:600;letter-spacing:.5px;margin-bottom:14px;
+  }
+  .host{color:var(--ink-2);font-size:16px;font-weight:600;margin-bottom:4px}
+  .event-title{font-size:26px;font-weight:700;line-height:1.25;margin-bottom:18px;word-break:break-word}
+  .meta{display:flex;flex-direction:column;gap:12px;color:var(--ink-2);font-size:15px;font-weight:600}
+  .meta-row{display:flex;gap:10px;align-items:flex-start;line-height:1.4}
+  .meta-row svg{flex:0 0 auto;margin-top:2px}
+  .meta-row.confirmed{color:var(--accent)}
+  .side-note{margin-top:auto;padding-top:24px;color:var(--muted);font-size:12px;line-height:1.5}
+  .side-note a{color:var(--muted)}
+
+  /* ── main panel ── */
+  .main{padding:32px;display:flex;flex-direction:column;min-width:0}
+  .main h2{font-size:22px;font-weight:700;margin-bottom:20px}
+
+  /* month calendar */
+  .month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .month-label{font-size:16px;font-weight:600}
+  .nav-btns{display:flex;gap:4px}
+  .nav-btn{
+    width:34px;height:34px;border:none;background:transparent;border-radius:50%;
+    color:var(--accent);cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-btn:hover:not(:disabled){background:var(--accent-soft)}
+  .nav-btn:disabled{color:#c9c9c9;cursor:default}
+
+  .cal{max-width:420px;width:100%}
+  .weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px}
+  .weekdays span{
+    text-align:center;font-size:11px;font-weight:600;color:var(--ink-2);
+    letter-spacing:.5px;padding:6px 0;
+  }
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .day{display:flex;align-items:center;justify-content:center;height:52px}
+  .day button{
+    width:min(100%,46px);aspect-ratio:1;height:auto;
+    border:none;border-radius:50%;cursor:pointer;
+    font-size:15px;font-weight:600;font-family:inherit;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;transition:background .12s ease;
+  }
+  .day button:hover{background:#dbeafe}
+  .day button[disabled]{background:transparent;color:#c2c2c2;cursor:default;font-weight:400}
+  .day button.selected{background:var(--accent);color:#fff}
+  .day button.selected:hover{background:var(--accent-dark)}
+  .day button.today::after{
+    content:"";position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+    width:4px;height:4px;border-radius:50%;background:currentColor;
+  }
+
+  .tz-block{margin-top:auto;padding-top:24px}
+  .tz-label{font-size:14px;font-weight:600;margin-bottom:8px}
+  .tz-select{
+    display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:14px;
+  }
+  .tz-select select{
+    flex:1;min-width:0;font-family:inherit;font-size:14px;color:var(--ink-2);
+    border:1px solid transparent;background:transparent;padding:6px 4px;border-radius:4px;cursor:pointer;
+  }
+  .tz-select select:hover{border-color:var(--line-2)}
+  .tz-select select:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+  /* duration picker */
+  .durations{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .dur-btn{
+    padding:8px 16px;border:1px solid var(--line-2);background:#fff;border-radius:20px;
+    font-size:14px;font-weight:600;color:var(--ink-2);cursor:pointer;
+  }
+  .dur-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .dur-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  /* slot column */
+  .slots{padding:32px 20px 32px 0;display:flex;flex-direction:column;min-width:0}
+  .slots h3{font-size:15px;font-weight:600;margin-bottom:14px;color:var(--ink)}
+  .slot-list{
+    display:flex;flex-direction:column;gap:8px;
+    overflow-y:auto;max-height:470px;padding-right:6px;
+  }
+  .slot-row{display:flex;gap:8px}
+  .slot-btn{
+    flex:1;min-width:0;height:52px;border-radius:4px;cursor:pointer;
+    border:1px solid rgba(0,105,255,.55);background:#fff;color:var(--accent);
+    font-size:15px;font-weight:600;font-family:inherit;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .12s ease,border-color .12s ease;
+  }
+  .slot-btn:hover{background:var(--accent-soft);border-width:2px}
+  .slot-btn.chosen{background:#4d5055;border-color:#4d5055;color:#fff}
+  .slot-next{
+    flex:1;height:52px;border-radius:4px;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:15px;font-weight:600;font-family:inherit;
+  }
+  .slot-next:hover{background:var(--accent-dark)}
+  .slots-empty{color:var(--muted);font-size:14px;line-height:1.6;padding:12px 0}
+
+  /* details form */
+  .form{max-width:440px;width:100%}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+  .req{color:var(--danger)}
+  .field input,.field textarea{
+    width:100%;font-family:inherit;font-size:15px;color:var(--ink);
+    padding:10px 12px;border:1px solid var(--line-2);border-radius:4px;background:#fff;
+  }
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .field input[aria-invalid="true"]{border-color:var(--danger)}
+  .field textarea{resize:vertical;min-height:80px}
+  .hint{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.4}
+  .err{font-size:12px;color:var(--danger);margin-top:5px;display:none}
+  .err.show{display:block}
+  .submit{
+    margin-top:8px;padding:12px 28px;border:none;border-radius:24px;
+    background:var(--accent);color:#fff;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;
+  }
+  .submit:hover:not(:disabled){background:var(--accent-dark)}
+  .submit:disabled{opacity:.55;cursor:default}
+  .form-error{
+    display:none;margin-bottom:16px;padding:12px 14px;border-radius:4px;
+    background:#fdecea;border:1px solid #f5c6c2;color:#8c1d18;font-size:14px;line-height:1.5;
+  }
+  .form-error.show{display:block}
+
+  /* confirmation */
+  .done{max-width:520px}
+  .done-check{
+    width:52px;height:52px;border-radius:50%;background:var(--ok);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .done h2{font-size:24px;margin-bottom:8px}
+  .done p.lead{color:var(--ink-2);font-size:15px;line-height:1.6;margin-bottom:22px}
+  .done-card{border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:#fafafa}
+  .done-card .row{display:flex;gap:10px;margin-bottom:12px;font-size:15px;color:var(--ink-2);align-items:flex-start}
+  .done-card .row:last-child{margin-bottom:0}
+  .done-card .row strong{color:var(--ink);font-weight:600}
+
+  /* demo-mode banner */
+  .banner{
+    max-width:1040px;width:100%;margin:0 auto 16px;
+    padding:12px 16px;border-radius:6px;font-size:13.5px;line-height:1.55;
+    background:#fff8e1;border:1px solid #f0d68a;color:#6b5410;
+  }
+  .banner strong{font-weight:700}
+  .banner code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px;font-size:12.5px}
+
+  .loading{color:var(--muted);font-size:14px;padding:12px 0}
+
+  .footer{
+    text-align:center;padding:20px 16px 32px;color:var(--muted);font-size:13px;
+  }
+  .footer a{color:var(--muted)}
+
+  @media (max-width:900px){
+    .card,.card.has-slots{grid-template-columns:1fr;min-height:0}
+    .side{border-right:none;border-bottom:1px solid var(--line);padding:22px}
+    .main{padding:22px}
+    .slots{padding:0 22px 22px}
+    .event-title{font-size:23px}
+    .days{gap:2px}
+    .weekdays span{font-size:10px;letter-spacing:0}
+    .slot-list{max-height:none}
+    .side-note{margin-top:20px}
+    .tz-block{margin-top:24px}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div style="width:100%;max-width:1040px">
+    <div class="banner" id="banner" hidden></div>
+
+    <div class="card" id="card">
+
+      <!-- ── left summary ── -->
+      <aside class="side">
+        <button class="back" id="back" aria-label="Back">&#8592;</button>
+        <div class="avatar" id="avatar">ID</div>
+        <div class="host" id="hostName">Ivan Dubovyi</div>
+        <h1 class="event-title" id="eventTitle">Meeting with Ivan</h1>
+        <div class="meta">
+          <div class="meta-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span id="metaDuration">30 min</span>
+          </div>
+          <div class="meta-row confirmed" id="metaWhen" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            <span id="metaWhenText"></span>
+          </div>
+          <div class="meta-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
+            <span id="metaTz">Detecting your timezone</span>
+          </div>
+        </div>
+        <p class="side-note">
+          Times are shown in your own timezone.
+          Ivan takes meetings 8:00am to 9:00pm Eastern.
+          <br><br>
+          <a href="/">&#8592; ivandubovyi.com</a>
+        </p>
+      </aside>
+
+      <!-- ── step 1: pick date ── -->
+      <section class="main" id="stepPick">
+        <h2>Select a Date &amp; Time</h2>
+
+        <div class="durations" id="durations"></div>
+
+        <div class="cal">
+        <div class="month-nav">
+          <div class="month-label" id="monthLabel">&nbsp;</div>
+          <div class="nav-btns">
+            <button class="nav-btn" id="prevMonth" aria-label="Previous month">&#8249;</button>
+            <button class="nav-btn" id="nextMonth" aria-label="Next month">&#8250;</button>
+          </div>
+        </div>
+
+        <div class="weekdays">
+          <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span>
+        </div>
+        <div class="days" id="days"></div>
+        </div>
+
+        <div class="tz-block cal">
+          <div class="tz-label">Time zone</div>
+          <div class="tz-select">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
+            <select id="tzSelect" aria-label="Time zone"></select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── slot column ── -->
+      <section class="slots" id="slotCol" hidden>
+        <h3 id="slotDate"></h3>
+        <div class="slot-list" id="slotList"></div>
+      </section>
+
+      <!-- ── step 2: details ── -->
+      <section class="main" id="stepForm" hidden>
+        <h2>Enter Details</h2>
+        <div class="form-error" id="formError"></div>
+        <form class="form" id="bookForm" novalidate>
+          <div class="field">
+            <label for="fTitle">What is this meeting about? <span class="req">*</span></label>
+            <input id="fTitle" name="title" type="text" maxlength="120" autocomplete="off" required>
+            <div class="hint">This becomes the title of the event.</div>
+            <div class="err" id="eTitle">Please add a title.</div>
+          </div>
+          <div class="field">
+            <label for="fName">Full name <span class="req">*</span></label>
+            <input id="fName" name="name" type="text" maxlength="80" autocomplete="name" required>
+            <div class="err" id="eName">Please add your full name.</div>
+          </div>
+          <div class="field">
+            <label for="fEmail">Email <span class="req">*</span></label>
+            <input id="fEmail" name="email" type="email" maxlength="120" autocomplete="email" required>
+            <div class="hint">Your confirmation and reminders go here.</div>
+            <div class="err" id="eEmail">Please add a valid email address.</div>
+          </div>
+          <div class="field">
+            <label for="fPhone">Phone number <span class="req">*</span></label>
+            <input id="fPhone" name="phone" type="tel" maxlength="32" autocomplete="tel" required>
+            <div class="err" id="ePhone">Please add a phone number.</div>
+          </div>
+          <div class="field">
+            <label for="fNotes">Anything Ivan should know beforehand?</label>
+            <textarea id="fNotes" name="notes" maxlength="1000"></textarea>
+          </div>
+          <button type="submit" class="submit" id="submitBtn">Schedule Event</button>
+        </form>
+      </section>
+
+      <!-- ── step 3: confirmed ── -->
+      <section class="main" id="stepDone" hidden>
+        <div class="done">
+          <div class="done-check">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 7"/></svg>
+          </div>
+          <h2>You are scheduled</h2>
+          <p class="lead" id="doneLead">A calendar invitation has been emailed to you and to Ivan.</p>
+          <div class="done-card">
+            <div class="row">
+              <strong id="doneTitle"></strong>
+            </div>
+            <div class="row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="margin-top:3px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <span id="doneWhen"></span>
+            </div>
+            <div class="row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="margin-top:3px"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
+              <span id="doneTz"></span>
+            </div>
+            <div class="row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="margin-top:3px"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+              <span id="doneEmail"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="footer">Booking page for <a href="/">Ivan Dubovyi</a></div>
+
+<script src="config.js"></script>
+<script src="scheduling.js"></script>
+<script src="booking.js"></script>
+</body>
+</html>

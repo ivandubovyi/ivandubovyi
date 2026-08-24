@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+<style>
+  :root{
+    --accent:#0069ff;--accent-dark:#0053cc;--accent-soft:#eff6ff;
+    --ink:#1a1a1a;--ink-2:#4d5055;--muted:#85868a;
+    --line:#e0e0e0;--line-2:#d6d6d6;
+    --ok:#0a8050;--ok-soft:#e8f5ee;--danger:#c62828;--danger-soft:#fdecea;
+    --warn:#8a6d00;--warn-soft:#fff8e1;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
+  body{font-family:var(--font);background:#f5f6f8;color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  button,input,select,textarea{font-family:inherit}
+
+  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .topbar h1{font-size:17px;font-weight:700}
+  .topbar .sub{color:var(--muted);font-size:13px;font-weight:400}
+  .topbar-actions{display:flex;gap:8px;align-items:center}
+
+  .btn{padding:8px 16px;border-radius:6px;border:1px solid var(--line-2);background:#fff;
+    color:var(--ink-2);font-size:14px;font-weight:600;cursor:pointer}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-dark);border-color:var(--accent-dark);color:#fff}
+  .btn-danger{color:var(--danger);border-color:#f0c4c0}
+  .btn-danger:hover{background:var(--danger-soft);border-color:var(--danger);color:var(--danger)}
+  .btn-sm{padding:5px 11px;font-size:13px}
+  .btn:disabled{opacity:.5;cursor:default}
+
+  .page{max-width:1080px;margin:0 auto;padding:24px 20px 60px}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:8px;margin-bottom:20px;overflow:hidden}
+  .panel-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;
+    align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .panel-head h2{font-size:16px;font-weight:700}
+  .panel-head .count{color:var(--muted);font-size:13px;font-weight:400}
+  .panel-body{padding:20px}
+  .panel-body.flush{padding:0}
+
+  /* login */
+  .login{max-width:400px;margin:80px auto;background:#fff;border:1px solid var(--line);
+    border-radius:8px;padding:32px}
+  .login h2{font-size:20px;margin-bottom:6px}
+  .login p{color:var(--ink-2);font-size:14px;margin-bottom:20px}
+
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;font-size:14px;color:var(--ink);
+    padding:9px 11px;border:1px solid var(--line-2);border-radius:6px;background:#fff}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .alert{padding:11px 14px;border-radius:6px;font-size:13.5px;margin-bottom:16px;line-height:1.5}
+  .alert-err{background:var(--danger-soft);border:1px solid #f5c6c2;color:#8c1d18}
+  .alert-ok{background:var(--ok-soft);border:1px solid #b7dfc9;color:#0a5c3a}
+  .alert-warn{background:var(--warn-soft);border:1px solid #f0d68a;color:#6b5410}
+
+  /* rows */
+  .row{padding:14px 20px;border-bottom:1px solid #f0f0f0;display:flex;gap:16px;
+    align-items:flex-start;justify-content:space-between}
+  .row:last-child{border-bottom:none}
+  .row-main{min-width:0;flex:1}
+  .row-title{font-size:15px;font-weight:600;margin-bottom:3px;word-break:break-word}
+  .row-when{font-size:13.5px;color:var(--accent);font-weight:600;margin-bottom:5px}
+  .row-meta{font-size:13px;color:var(--ink-2);line-height:1.65;word-break:break-word}
+  .row-meta a{color:var(--ink-2)}
+  .row-notes{margin-top:6px;padding:8px 10px;background:#fafafa;border-radius:4px;
+    font-size:13px;color:var(--ink-2);white-space:pre-wrap}
+  .row-actions{flex:0 0 auto}
+  .row.cancelled{opacity:.55}
+  .row.cancelled .row-when{color:var(--muted);text-decoration:line-through}
+
+  .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;
+    font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-left:8px;vertical-align:1px}
+  .pill-ok{background:var(--ok-soft);color:var(--ok)}
+  .pill-off{background:#eee;color:var(--muted)}
+  .pill-block{background:var(--warn-soft);color:var(--warn)}
+
+  .empty{padding:28px 20px;text-align:center;color:var(--muted);font-size:14px}
+  .hint{font-size:12px;color:var(--muted);margin-top:5px}
+  .tzline{font-size:13px;color:var(--muted);padding:0 20px 14px}
+
+  @media (max-width:640px){
+    .grid-3,.grid-2{grid-template-columns:1fr}
+    .row{flex-direction:column;gap:10px}
+    .row-actions{align-self:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── login ── -->
+<div id="loginView">
+  <div class="login">
+    <h2>Calendar admin</h2>
+    <p>Sign in to manage bookings and add your own events.</p>
+    <div class="alert alert-err" id="loginErr" hidden></div>
+    <form id="loginForm">
+      <div class="field">
+        <label for="pw">Password</label>
+        <input id="pw" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%" id="loginBtn" type="submit">Sign in</button>
+    </form>
+    <p style="margin-top:18px;font-size:12px;color:var(--muted)">
+      Set in the Apps Script project under
+      Project Settings &rsaquo; Script Properties &rsaquo; ADMIN_PASSWORD.
+    </p>
+  </div>
+</div>
+
+<!-- ── app ── -->
+<div id="appView" hidden>
+  <div class="topbar">
+    <div>
+      <h1>Calendar admin</h1>
+      <div class="sub" id="tzNote"></div>
+    </div>
+    <div class="topbar-actions">
+      <a class="btn btn-sm" href="../">Booking page</a>
+      <button class="btn btn-sm" id="refreshBtn">Refresh</button>
+      <button class="btn btn-sm" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+
+  <div class="page">
+    <div id="notice"></div>
+
+    <!-- add an event -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Add one of your own events</h2>
+        <span class="count">Blocks the time so nobody can book it</span>
+      </div>
+      <div class="panel-body">
+        <form id="blockForm">
+          <div class="field">
+            <label for="bLabel">What is it?</label>
+            <input id="bLabel" type="text" maxlength="120" placeholder="Soccer practice" required>
+          </div>
+          <div class="grid-3">
+            <div class="field">
+              <label for="bDate">Date</label>
+              <input id="bDate" type="date" required>
+            </div>
+            <div class="field">
+              <label for="bStart">Starts</label>
+              <input id="bStart" type="time" step="900" value="17:00" required>
+            </div>
+            <div class="field">
+              <label for="bEnd">Ends</label>
+              <input id="bEnd" type="time" step="900" value="19:00" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="bNotes">Notes (optional)</label>
+            <input id="bNotes" type="text" maxlength="500">
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-primary" type="submit" id="blockBtn">Add event</button>
+            <button class="btn" type="button" id="allDayBtn">Block the whole day</button>
+          </div>
+          <div class="hint" id="blockHint"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- upcoming bookings -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Upcoming bookings</h2>
+        <span class="count" id="upcomingCount"></span>
+      </div>
+      <div class="tzline" id="upcomingTz" hidden></div>
+      <div class="panel-body flush" id="upcomingList"></div>
+    </section>
+
+    <!-- your events -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Your events</h2>
+        <span class="count" id="blockCount"></span>
+      </div>
+      <div class="panel-body flush" id="blockList"></div>
+    </section>
+
+    <!-- past -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Past and cancelled</h2>
+        <span class="count" id="pastCount"></span>
+      </div>
+      <div class="panel-body flush" id="pastList"></div>
+    </section>
+  </div>
+</div>
+
+<script src="../config.js"></script>
+<script src="../scheduling.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

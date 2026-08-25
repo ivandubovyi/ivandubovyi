@@ -11,7 +11,7 @@
    so nothing silently pretends to have been booked.
 ------------------------------------------------------------------ */
 window.CALENDAR_CONFIG = {
-  API_URL: "",
+  API_URL: "https://script.google.com/macros/s/AKfycbwsB25xpZ8t7VOuSKnUBcM6Sk1mGGVVFetn2ZWM2Md2lsI9BonzaulR3xtcq6ucO-hR/exec",
 
   HOST_NAME: "Ivan Dubovyi",
   HOST_INITIALS: "ID",

@@ -18,9 +18,16 @@ window.CALENDAR_CONFIG = {
   HOST_TIMEZONE: "America/New_York",
 
   // Ivan's working window, in HIS timezone (HOST_TIMEZONE above).
-  // 8:00am to 9:00pm. The last bookable slot ends by WORK_END.
-  WORK_START: "08:00",
+  // 9:00am to 9:00pm. The last bookable slot ends by WORK_END.
+  WORK_START: "09:00",
   WORK_END:   "21:00",
+
+  // Windows blocked EVERY day, in HOST_TIMEZONE wall-clock time.
+  // These need no rows in the sheet and never expire. Being wall-clock,
+  // 12:00 stays 12:00 across the DST change.
+  DAILY_BLOCKS: [
+    { start: "12:00", end: "13:00", label: "Gym" },
+  ],
 
   // Meeting lengths offered, in minutes. First one is the default.
   DURATIONS: [30, 15, 60],

@@ -99,6 +99,36 @@
     return out;
   }
 
+  /* The recurring daily blocks, as real UTC intervals, for ONE of the
+     host's calendar days. Built per day so 12:00 stays 12:00 through the
+     DST change instead of sliding an hour. */
+  function dailyBlocksForHostDay(hostDateKey, cfg) {
+    const list = cfg.DAILY_BLOCKS || [];
+    if (!list.length) return [];
+    const { y, m, d } = parseDateKey(hostDateKey);
+    const tz = cfg.HOST_TIMEZONE;
+    return list.map((b) => {
+      const s = hhmmToMinutes(b.start);
+      const e = hhmmToMinutes(b.end);
+      return {
+        start: zonedToUtc(y, m, d, Math.floor(s / 60), s % 60, tz),
+        end: zonedToUtc(y, m, d, Math.floor(e / 60), e % 60, tz),
+        label: b.label || "Busy",
+      };
+    });
+  }
+
+  /* Daily blocks covering the three host days a viewer's day can touch. */
+  function dailyBlocksAround(viewerDateKey, cfg) {
+    const out = [];
+    for (const delta of [-1, 0, 1]) {
+      for (const b of dailyBlocksForHostDay(addDaysToKey(viewerDateKey, delta), cfg)) {
+        out.push(b);
+      }
+    }
+    return out;
+  }
+
   /* Slot starts that land on `viewerDateKey` when read in `viewerTz`.
 
      Ivan's day and the viewer's day are different windows on the same
@@ -132,6 +162,9 @@
     const durMs = durationMin * 60000;
     const bufMs = (cfg.BUFFER_AFTER || 0) * 60000;
 
+    // The gym block and anything else recurring counts as busy too.
+    const allBusy = busy.concat(dailyBlocksAround(viewerDateKey, cfg));
+
     return slotsForViewerDay(viewerDateKey, viewerTz, cfg).filter((start) => {
       if (start < minStart) return false;
 
@@ -144,7 +177,7 @@
       if (endMinutes > endLimitMin && !(endMinutes === 0 && endLimitMin === 1440)) return false;
       if (endMinutes < startMinutes) return false; // ran past midnight
 
-      for (const b of busy) {
+      for (const b of allBusy) {
         if (overlaps(start, endMs + bufMs, b.start, b.end)) return false;
       }
       return true;
@@ -200,6 +233,7 @@
     tzOffsetMs, zonedToUtc, utcToZonedParts, dateKeyInTz, parseDateKey,
     addDaysToKey, weekdayInTz, slotsForHostDay, slotsForViewerDay,
     availableSlots, overlaps, formatTime, formatLongDate, formatFullDateTime,
+    dailyBlocksForHostDay, dailyBlocksAround,
     tzLabel, guessTimezone, hhmmToMinutes,
   };
 })(window);

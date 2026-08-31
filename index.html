@@ -4,7 +4,7 @@
     <!-- this is my personal website!! made by ivan dubovyi -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ivan Dubovyi | Student, Coder, Athlete</title>
+    <title>Ivan Dubovyi | Student, Coder, Athlete, Entrepreneur, Public Speaker</title>
     <meta name="description" content="The personal website of Ivan Dubovyi. My coding journey and projects, my story, refereeing, school, sports, and a photo gallery.">
     <meta name="author" content="Ivan Dubovyi">
     <link rel="canonical" href="https://ivandubovyi.com/">
@@ -14,14 +14,14 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Ivan Dubovyi">
     <meta property="og:url" content="https://ivandubovyi.com/">
-    <meta property="og:title" content="Ivan Dubovyi | Student, Coder, Athlete">
+    <meta property="og:title" content="Ivan Dubovyi | Student, Coder, Athlete, Entrepreneur, Public Speaker">
     <meta property="og:description" content="The personal website of Ivan Dubovyi. My coding journey and projects, my story, refereeing, school, sports, and a photo gallery.">
     <meta property="og:image" content="https://ivandubovyi.com/og.jpg">
     <meta property="og:image:width" content="900">
     <meta property="og:image:height" content="1200">
     <meta property="og:image:alt" content="Ivan Dubovyi">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ivan Dubovyi | Student, Coder, Athlete">
+    <meta name="twitter:title" content="Ivan Dubovyi | Student, Coder, Athlete, Entrepreneur, Public Speaker">
     <meta name="twitter:description" content="The personal website of Ivan Dubovyi. My coding journey and projects, my story, refereeing, school, sports, and a photo gallery.">
     <meta name="twitter:image" content="https://ivandubovyi.com/og.jpg">
 
@@ -661,7 +661,7 @@
         }
         .school-timeline {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 3rem;
             text-align: left;
@@ -1434,7 +1434,12 @@
         }
         .hero-inner h1 .line:nth-child(1) .line-in { animation-delay: 0.10s; }
         .hero-inner h1 .line:nth-child(2) .line-in { animation-delay: 0.22s; }
-        .hero-inner h1 .dim { color: oklch(0.97 0.012 90 / 0.42); }
+        .hero-inner h1 .line:nth-child(3) .line-in { animation-delay: 0.34s; }
+        .hero-inner h1 .dim {
+            color: oklch(0.97 0.012 90 / 0.42);
+            font-size: 0.56em;
+            letter-spacing: -0.02em;
+        }
         @keyframes lineUp { to { transform: translateY(0); } }
 
         .hero-lede {
@@ -1600,6 +1605,9 @@
             .say-hi { padding: 6px 11px; font-size: 0.8rem; }
             #home { padding: 100px 20px 56px; }
             .hero-inner h1 { font-size: clamp(1.85rem, 8.6vw, 3rem); }
+            /* the name is smaller here, so the descriptor needs a bigger
+               share of it to stay clearly above body copy */
+            .hero-inner h1 .dim { font-size: 0.64em; }
             .hero-photo.p1 { --w: 31vw; top: 12%; left: 2%; }
             .hero-photo.p2 { --w: 28vw; top: 22%; left: 37%; }
             .hero-photo.p3 { --w: 30vw; top: 11%; left: 67%; }
@@ -1897,7 +1905,8 @@
             <div class="hero-inner">
                 <h1>
                     <span class="line"><span class="line-in">Ivan Dubovyi.</span></span>
-                    <span class="line"><span class="line-in dim">Student, coder, athlete.</span></span>
+                    <span class="line"><span class="line-in dim">Student, coder, athlete,</span></span>
+                    <span class="line"><span class="line-in dim">entrepreneur, public speaker.</span></span>
                 </h1>
                 <p class="hero-lede">Teenager building things for the web, refereeing soccer on the weekends,
                     and trying to get better at both. Born in Ukraine, based in the US.</p>
@@ -2013,7 +2022,7 @@
                     <span class="kicker reveal">Where I'm from</span>
                     <h2 class="reveal">My Story</h2>
                     <p class="reveal">Hello again! Shortly about my story: I was born in Ukraine, and lived my happy life in a peacful city of Melitopol. Then, war happened, and I was forced to move to a different country.</p>
-                    <p class="reveal">In the US, I started a new life. At the age of 10, I came to America, with a minimal knowledge of the language. Though it was hard - I made my way through. Now, as of 2025, I'm in 8th grade, working hard to achieve all of my goals.</p>
+                    <p class="reveal">In the US, I started a new life. At the age of 10, I came to America, with a minimal knowledge of the language. Though it was hard - I made my way through. Now, as of 2026, I'm in 9th grade, working hard to achieve all of my goals.</p>
                     <p class="reveal">I found interests in coding and soccer. Coding was always close to me - I started with the easiest languages, and then moved up the ranks. While sitting in the computer all day was interesting, I also wanted to play outside and talk to people. Soccer - satisfied all the checks on my checklist, and it easily became a gigantic part of my life</p>
                 </div>
                 <div class="story-image reveal">
@@ -2051,13 +2060,18 @@
                 <div class="school-timeline">
                     <div class="timeline-item reveal">
                         <img loading="lazy" decoding="async" src="1stclass.jpg" alt="Elementary School" style="object-position: center top">
-                        <h3>Elementary Years (2018-2023)</h3>
-                        <p>I started my school career in 2018. I went to 1st grade at Elementary School No. 3, in my home city of Melitopol. There, I gained basic knowledge about Math, English, and Science. I won a couple awards as well. I won 2 math contests, and reader's contest - where you have to write a poem, memorize it, and perform it in front of the judges. When I moved to the US, I started out in the Castle Hills Elementary. I'm really grateful for that school for helping me adapt in the US with barely any knowledge of English. Every teacher was very helpful, and I'm thankful for everyone who helped me on my journey in that school.</p>
+                        <h3>Elementary (2018-2023)</h3>
+                        <p>I started my school career in 2018. When I moved to the US, I started out in the Castle Hills Elementary. I'm really grateful for that school for helping me adapt in the US with barely any knowledge of English. Every teacher was very helpful, and I'm thankful for everyone who helped me on my journey in that school, and for the start it gave me here.</p>
                     </div>
                     <div class="timeline-item reveal">
                         <img loading="lazy" decoding="async" src="IMG_1214.JPG" alt="Middle School" style="object-position: center top">
                         <h3>Middle School (2023-2026)</h3>
                         <p>After 5th grade, I went to the Middle School Honors Academy at Christiana High School. I had to go through a selection: doing a special test, getting recommendations from my teachers, and even recording a video about my skills. Though it was hard to get in, especially with minimal knowledge of English, I tried my best, and got into the school. Throughout all 3 years at this school, I maintained A's or high B's. I participated in Soccer in 7th and 8th grade, did Math League in 7th and 8th grade, and always tried to involve myself, not only in classes, but in other different activities and extracurriculars.</p>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <img loading="lazy" decoding="async" src="IMG_1653.JPG" alt="High School" style="object-position: center 22%">
+                        <h3>High School (2026-2030)</h3>
+                        <p>I'm excited to continue my journey with Christiana in high school, on the same campus where I spent all three of my middle school years. I'm hoping to get involved with the community as much as I can, get outstanding grades, and help my peers whenever they need it. I want to keep playing soccer, keep building the projects I care about, and take on the harder classes that push me. This chapter is just starting, so I'll keep this page updated as it goes.</p>
                     </div>
                 </div>
             </div>

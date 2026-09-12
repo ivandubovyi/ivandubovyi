@@ -1732,10 +1732,11 @@
            headline that matches the lettering in the logo. Every section
            below keeps the site's own colours.
 
-           Built phone first. The name and the lede span the width and the
-           buttons sit beside the photo, so the name, the face and the main
-           button fit the first screen of an iPhone with Safari's bars
-           showing (390x664). The headline and the photo paint on the first
+           Built phone first. On a phone the name, the lede and both buttons
+           come first, then the photos take the full width below them, so
+           they can be big while the buttons stay on the first screen of an
+           iPhone with Safari's bars showing (390x664). The headline and the
+           photo paint on the first
            frame instead of fading in, which keeps LCP early; the motion is the
            photo rising into place, the card settling and the ballot tick
            drawing itself. Behind everything stands the Christiana Viking,
@@ -1780,12 +1781,13 @@
             margin: 0 auto;
             padding: 70px 20px 0;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            grid-template-rows: auto auto 1fr;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: auto auto auto 1fr;
             grid-template-areas:
-                "head    head"
-                "lede    lede"
-                "actions photo";
+                "head"
+                "lede"
+                "actions"
+                "photo";
             column-gap: 12px;
         }
 
@@ -1890,12 +1892,11 @@
 
         .campaign-actions {
             grid-area: actions;
-            align-self: end;
             display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 6px;
-            padding: 18px 0 30px;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 16px;
+            padding: 16px 0 0;
         }
         .campaign-actions .pill {
             flex: 0 0 auto;
@@ -1918,8 +1919,8 @@
         }
         .campaign-pill-red:hover .pill-arrow { transform: translate(2px, -2px); }
 
-        /* on a phone the second action is a plain link under the button, so
-           both fit beside the photo; from tablet width up it is a pill */
+        /* on a phone the second action is a plain link next to the button,
+           so both fit on one row; from tablet width up it is a pill */
         .campaign-actions .campaign-pill-ghost {
             min-height: 44px;
             padding: 10px 4px;
@@ -1936,14 +1937,18 @@
             outline-offset: 3px;
         }
 
+        /* on a phone the photo row spans the width: the standing photo sits
+           right and the card starts at the left edge, so neither leaves the screen */
         .campaign-photo {
-            --photo-h: clamp(250px, 46vh, 380px);
+            --photo-h: clamp(360px, 60vh, 480px);
             grid-area: photo;
             position: relative;
             align-self: end;
+            justify-self: stretch;
+            margin-top: 18px;
         }
         @supports (height: 1svh) {
-            .campaign-photo { --photo-h: clamp(250px, 46svh, 380px); }
+            .campaign-photo { --photo-h: clamp(360px, 60svh, 480px); }
         }
         /* the standing photo is the back layer; a card with the focused
            laptop shot sits over its lower half, clear of the face */
@@ -1952,6 +1957,7 @@
             z-index: 1;
             height: var(--photo-h);
             width: auto;
+            margin-left: auto;
             animation: campaignRise 0.9s cubic-bezier(.16, 1, .3, 1) both;
         }
         @keyframes campaignRise { from { transform: translateY(32px); } }
@@ -1959,9 +1965,9 @@
         .campaign-card {
             position: absolute;
             z-index: 2;
-            left: calc(var(--photo-h) * 0.02);
+            left: 0;
             bottom: calc(var(--photo-h) * 0.07);
-            width: calc(var(--photo-h) * 0.42);
+            width: calc(var(--photo-h) * 0.44);
             margin: 0;
             padding: calc(var(--photo-h) * 0.016) calc(var(--photo-h) * 0.016) calc(var(--photo-h) * 0.06);
             background: #ffffff;
@@ -1972,6 +1978,13 @@
         }
         .campaign-card img { display: block; width: 100%; height: auto; }
         @keyframes campaignCard { from { transform: rotate(-12deg) translateY(24px); } }
+        /* from tablet width up the card starts inside the photo column again */
+        @media (min-width: 641px) {
+            .campaign-card {
+                left: calc(var(--photo-h) * 0.02);
+                width: calc(var(--photo-h) * 0.42);
+            }
+        }
         /* on wide screens the card steps a fixed 40px out to the left. A step
            tied to the photo height ran into the end of DUBOVYI on tall screens,
            where the name keeps growing after the photo hits its size cap */
@@ -2018,9 +2031,9 @@
 
         /* narrow Android phones */
         @media (max-width: 380px) {
-            .campaign-photo { --photo-h: clamp(230px, 42vh, 330px); }
+            .campaign-photo { --photo-h: clamp(320px, 56vh, 420px); }
             @supports (height: 1svh) {
-                .campaign-photo { --photo-h: clamp(230px, 42svh, 330px); }
+                .campaign-photo { --photo-h: clamp(320px, 56svh, 420px); }
             }
             .campaign-actions .pill { padding: 12px 14px; font-size: 0.9rem; }
         }
@@ -2037,6 +2050,7 @@
             }
             .campaign-inner {
                 padding: clamp(84px, 13vh, 104px) clamp(28px, 5vw, 72px) 0;
+                grid-template-columns: minmax(0, 1fr) auto;
                 grid-template-rows: 1fr auto auto;
                 grid-template-areas:
                     "head    photo"
@@ -2074,7 +2088,7 @@
                 background: rgba(255, 255, 255, 0.12);
                 border-color: #ffffff;
             }
-            .campaign-photo { --photo-h: min(88vh, 68vw, 860px); }
+            .campaign-photo { --photo-h: min(88vh, 68vw, 860px); margin-top: 0; }
             @supports (height: 1svh) {
                 .campaign-photo { --photo-h: min(88svh, 68vw, 860px); }
             }
@@ -2261,12 +2275,12 @@
             <div class="campaign-photo">
                 <img class="campaign-standing" src="campaign/ivan-420.webp"
                      srcset="campaign/ivan-420.webp 420w, campaign/ivan-620.webp 620w, campaign/ivan-829.webp 829w"
-                     sizes="(max-width: 640px) 210px, (max-width: 1100px) 37vw, 470px"
+                     sizes="(max-width: 640px) 260px, (max-width: 1100px) 37vw, 470px"
                      width="829" height="1528" alt="Ivan Dubovyi" fetchpriority="high">
                 <figure class="campaign-card">
                     <img src="campaign/ivan-focused-360.webp"
                          srcset="campaign/ivan-focused-360.webp 360w, campaign/ivan-focused-680.webp 680w"
-                         sizes="(max-width: 640px) 160px, (max-width: 1199px) 290px, 380px"
+                         sizes="(max-width: 640px) 215px, (max-width: 1199px) 290px, 380px"
                          width="680" height="680" alt="Ivan working on Somba at his laptop" decoding="async">
                 </figure>
             </div>

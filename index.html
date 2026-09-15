@@ -1598,7 +1598,7 @@
            on specificity, so in light mode they rendered as near-invisible text
            on white. These restate them through the tokens. */
         .coding-text-content h2, #refereeing h2, #contact h2 { color: var(--head); }
-        .coding-text-content p, #refereeing p, #contact p { color: var(--fg-dim); }
+        .coding-text-content p, #story p, #refereeing p, #contact p { color: var(--fg-dim); }
         .coding-text-content p b { color: var(--fg); }
         #coding .kicker, #refereeing .kicker, #contact .kicker { color: var(--fg-dim); }
         #coding .kicker::before, #refereeing .kicker::before, #contact .kicker::before {
@@ -1938,17 +1938,20 @@
         }
 
         /* on a phone the photo row spans the width: the standing photo sits
-           right and the card starts at the left edge, so neither leaves the screen */
+           right and the card starts at the left edge, so neither leaves the
+           screen. The photo height is set on the section because the Viking is
+           placed from it too. On a phone it grows with the width, capped by the
+           height so the face still makes the first screen with Safari's bars */
+        #home.campaign { --photo-h: clamp(420px, min(138vw, 80vh), 600px); }
+        @supports (height: 1svh) {
+            #home.campaign { --photo-h: clamp(420px, min(138vw, 80svh), 600px); }
+        }
         .campaign-photo {
-            --photo-h: clamp(360px, 60vh, 480px);
             grid-area: photo;
             position: relative;
             align-self: end;
             justify-self: stretch;
             margin-top: 18px;
-        }
-        @supports (height: 1svh) {
-            .campaign-photo { --photo-h: clamp(360px, 60svh, 480px); }
         }
         /* the standing photo is the back layer; a card with the focused
            laptop shot sits over its lower half, clear of the face */
@@ -1978,20 +1981,25 @@
         }
         .campaign-card img { display: block; width: 100%; height: auto; }
         @keyframes campaignCard { from { transform: rotate(-12deg) translateY(24px); } }
-        /* from tablet width up the card starts inside the photo column again */
+        /* from tablet width up the card starts inside the photo column again.
+           It sits lower and larger there, because the standing photo is already
+           as tall as the screen allows */
         @media (min-width: 641px) {
             .campaign-card {
                 left: calc(var(--photo-h) * 0.02);
-                width: calc(var(--photo-h) * 0.42);
+                bottom: calc(var(--photo-h) * 0.04);
+                width: calc(var(--photo-h) * 0.48);
             }
         }
-        /* on wide screens the card steps a fixed 40px out to the left. A step
+        /* on wide screens the card steps a fixed 36px out to the left. A step
            tied to the photo height ran into the end of DUBOVYI on tall screens,
-           where the name keeps growing after the photo hits its size cap */
+           where the name keeps growing after the photo hits its size cap. The
+           larger card reaches 3px further left, so the step is 4px shorter than
+           the 40px it was, which keeps at least 19px clear of the last letter */
         @media (min-width: 1200px) {
             .campaign-card {
-                left: -40px;
-                width: calc(var(--photo-h) * 0.44);
+                left: -36px;
+                width: calc(var(--photo-h) * 0.5);
             }
         }
 
@@ -2031,9 +2039,9 @@
 
         /* narrow Android phones */
         @media (max-width: 380px) {
-            .campaign-photo { --photo-h: clamp(320px, 56vh, 420px); }
+            #home.campaign { --photo-h: clamp(380px, min(134vw, 76vh), 520px); }
             @supports (height: 1svh) {
-                .campaign-photo { --photo-h: clamp(320px, 56svh, 420px); }
+                #home.campaign { --photo-h: clamp(380px, min(134vw, 76svh), 520px); }
             }
             .campaign-actions .pill { padding: 12px 14px; font-size: 0.9rem; }
         }
@@ -2088,10 +2096,69 @@
                 background: rgba(255, 255, 255, 0.12);
                 border-color: #ffffff;
             }
-            .campaign-photo { --photo-h: min(88vh, 68vw, 860px); margin-top: 0; }
+            #home.campaign { --photo-h: min(88vh, 68vw, 860px); }
+            .campaign-photo { margin-top: 0; }
             @supports (height: 1svh) {
-                .campaign-photo { --photo-h: min(88svh, 68vw, 860px); }
+                #home.campaign { --photo-h: min(88svh, 68vw, 860px); }
             }
+        }
+
+        /* over the hero the nav capsule is frosted glass on the Christiana
+           blue, rather than the dark bar it is on the rest of the page. The
+           script removes on-hero once the hero scrolls out from under it */
+        nav.on-hero .nav-inner {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 28, 72, 0.25);
+        }
+        nav.on-hero a.nav-link { color: rgba(255, 255, 255, 0.82); }
+        nav.on-hero a.nav-link:hover { color: #ffffff; background: rgba(255, 255, 255, 0.14); }
+        nav.on-hero a.nav-link.active { color: #0050a8; background: #ffffff; }
+        nav.on-hero .nav-actions::before { background: rgba(255, 255, 255, 0.3); }
+        nav.on-hero .theme-toggle,
+        nav.on-hero .say-hi {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        nav.on-hero .theme-toggle:hover,
+        nav.on-hero .say-hi:hover { background: rgba(255, 255, 255, 0.2); }
+        .nav-inner { transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease; }
+        .say-hi { transition: background-color .25s ease, border-color .25s ease, color .25s ease; }
+
+        /* one light source for everything standing on the blue: the logo
+           patch and the card already cast a shadow, now the photo and the
+           button do too */
+        .campaign-standing { filter: drop-shadow(0 18px 26px rgba(0, 24, 70, 0.35)); }
+        .campaign-actions .campaign-pill-red { box-shadow: 0 10px 22px rgba(0, 24, 70, 0.28); }
+
+        /* on a phone the Viking stands behind the photos, so the name and the
+           lede sit on clean blue and its horn fills the space beside the card.
+           Wider screens keep it full height behind the headline, one tone
+           lighter, so it stays a watermark */
+        @media (max-width: 640px) {
+            /* its top sits just above the photo row. The Viking is 121.7vw tall:
+               108% of the width, at the logo's 980 by 1104 shape */
+            .campaign-viking { top: auto; bottom: calc(var(--photo-h) + 6px - 121.7vw); }
+        }
+        @media (min-width: 641px) {
+            .campaign-viking { color: #0047a0; }
+        }
+
+        /* narrow phones: the smaller padding meant for the red button was also
+           padding the text link, which pushed it onto a second row */
+        @media (max-width: 380px) {
+            .campaign-actions { column-gap: 12px; }
+            .campaign-actions .campaign-pill-ghost { padding-left: 2px; padding-right: 2px; }
+        }
+
+        /* tablets in portrait: the office kept its desktop size in a narrow
+           column and broke as OF THE CLASS OF / 2030, so up to 900px it scales
+           with the width instead */
+        @media (min-width: 641px) and (max-width: 900px) {
+            .campaign-check { width: clamp(40px, 5vw, 58px); }
+            .campaign-role { font-size: clamp(1.3rem, 2.9vw, 2.2rem); }
+            .campaign-class { font-size: clamp(1.02rem, 2.2vw, 1.7rem); }
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -2191,6 +2258,168 @@
             font-weight: 600;
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           PHONES
+           Below the hero, each section was its desktop layout squeezed into
+           one column: the code screenshot and its buttons landed above their
+           own heading, school photos sat as 220px thumbnails in wide cards,
+           headings flipped between centred and left, and every section kept
+           about 150px of padding. On a phone this layer gives all of them one
+           shape: heading first on the left, media at full width, one reading
+           size and tighter spacing. Wider screens keep their layout; there
+           the only change is the line icons that replaced the emoji.
+           ═══════════════════════════════════════════════════════════════ */
+
+        /* line icons instead of emoji and arrow characters, which a phone
+           draws from its emoji font */
+        .pill-arrow svg, .arrow svg, .lb-close svg, .lb-nav svg {
+            display: block;
+            width: 1em;
+            height: 1em;
+        }
+        .lb-close svg { width: 22px; height: 22px; }
+        .lb-nav svg { width: 26px; height: 26px; }
+        .coding-button .arrow { transition: transform .25s ease; }
+        .coding-button:hover .arrow { transform: translate(2px, -2px); }
+        .photo-zoom::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            background: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5'/%3E%3C/svg%3E") center / contain no-repeat;
+        }
+
+        /* the links under the code screenshot, formerly an inline style */
+        .coding-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* when the links overflow the capsule it scrolls sideways; the script
+           fades whichever side has more links and keeps the current one in view */
+        .nav-pills {
+            --fade-l: 0px;
+            --fade-r: 0px;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+        }
+        .nav-pills.can-left { --fade-l: 28px; }
+        .nav-pills.can-right { --fade-r: 28px; }
+
+        /* a tap leaves :hover stuck on touch screens, which kept cards lifted
+           and photos zoomed after the lightbox closed */
+        @media (hover: none) {
+            .pill:hover, .cta-button:hover, .coding-button:hover, .contact-link:hover,
+            .portfolio-card:hover, .achievement-card:hover, .timeline-item:hover,
+            .skill-card:hover, .photo-item:hover { transform: none; }
+            .photo-item:hover img, .portfolio-card:hover .portfolio-card-screenshot,
+            .achievement-card:hover img, .timeline-item img:hover,
+            .story-image img:hover, .coding-image-container img:hover { transform: none; }
+            .photo-item:hover::after { opacity: 0; }
+            .photo-zoom { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            section { padding: 56px 20px; }
+
+            /* every heading starts on the left, the way Why me does */
+            .portfolio-header, .school-content, .soccer-content,
+            .gallery-content, #contact { text-align: left; }
+            #contact .kicker { justify-content: flex-start; }
+            .coding-text-content h2, .portfolio-header h2, .school-content h2,
+            .soccer-content h2, .gallery-content h2, .story-content h2, #contact h2 {
+                font-size: clamp(2rem, 9.5vw, 2.4rem);
+                line-height: 1.08;
+                margin-bottom: 0.8rem;
+            }
+            .portfolio-header p, .school-content > p, .soccer-content > p,
+            .gallery-content > p, #contact p {
+                max-width: none;
+                margin: 0;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            #contact p { margin-bottom: 1.5rem; }
+            .coding-text-content p, .story-content p {
+                margin-bottom: 0.85rem;
+                font-size: 1rem;
+                line-height: 1.65;
+            }
+            .skill-card p, .portfolio-card-body p, .timeline-item p, .achievement-card p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            /* coding: the story first, then the code it mentions and the links */
+            .coding-main-grid { gap: 1.5rem; margin-bottom: 0; }
+            .coding-image-container { order: 0; }
+            .coding-image-container img { max-width: 100%; height: auto; border-radius: 14px; }
+            .coding-links { align-items: stretch; gap: 10px; margin-top: 12px; }
+            .coding-links .coding-button { justify-content: center; min-height: 48px; }
+            .skills-grid { gap: 12px; margin-top: 2rem; }
+            .skill-card { padding: 20px; }
+            .skill-card h3 { margin-bottom: 0.4rem; font-size: 1.15rem; }
+
+            /* work: the tag moves off the screenshot, where it covered each
+               site's logo or headline, and the link becomes a full-width pill */
+            .portfolio-header { margin-bottom: 1.75rem; }
+            .portfolio-grid { gap: 16px; }
+            .portfolio-card-media { background: transparent; }
+            .portfolio-card-screenshot { height: auto; aspect-ratio: 16 / 10; background: var(--surface-2); }
+            .portfolio-tag {
+                position: static;
+                display: block;
+                margin: 18px 20px 0;
+                padding: 0;
+                border: 0;
+                border-radius: 0;
+                background: none;
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+                color: var(--fg-dim);
+                letter-spacing: 0.1em;
+            }
+            .portfolio-card-body { padding: 6px 20px 20px; }
+            .portfolio-card-body h3 { margin-bottom: 0.5rem; font-size: 1.35rem; }
+            .portfolio-card-body p { margin-bottom: 1.1rem; }
+            .portfolio-card-link, .portfolio-card-link:hover {
+                align-self: stretch;
+                justify-content: center;
+                min-height: 48px;
+                border-radius: 999px;
+                background: var(--solid-bg);
+                color: var(--solid-fg);
+                box-shadow: none;
+            }
+
+            /* story and refereeing: the photo at full width */
+            .story-grid { gap: 1.25rem; }
+            .story-image { text-align: left; }
+            .story-image img { max-width: none; margin: 0 0 0.6rem; border-radius: 16px; }
+            .story-image p { margin: 0; }
+
+            /* school and sports: one card shape, photo across the top */
+            .school-timeline, .achievements-grid { gap: 14px; margin-top: 1.75rem; }
+            .timeline-item, .achievement-card { padding: 0; overflow: hidden; }
+            .timeline-item img, .achievement-card img {
+                width: 100%;
+                max-width: none;
+                height: auto;
+                aspect-ratio: 16 / 10;
+                margin: 0;
+                border-radius: 0;
+            }
+            .timeline-item h3, .achievement-card h3 { margin: 18px 20px 0.45rem; font-size: 1.2rem; }
+            .timeline-item p, .achievement-card p { margin: 0 20px 20px; }
+
+            .photo-grid { margin-top: 1.5rem; }
+            .contact-links { gap: 10px; }
+        }
+
         /* ── respect reduced motion ── */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -2205,7 +2434,7 @@
 <body>
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <nav>
+    <nav class="on-hero">
         <div class="nav-inner">
             <div class="nav-pills">
                 <ul>
@@ -2233,7 +2462,7 @@
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                     </svg>
                 </button>
-                <a href="#contact" class="say-hi">Say Hi &#128075;</a>
+                <a href="#contact" class="say-hi">Say Hi</a>
             </div>
         </div>
     </nav>
@@ -2268,19 +2497,19 @@
 
             <div class="campaign-actions">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzEneveUXg4yRkyPkR8zXFJIGcXIA5H5QNCTAVpTjRXa-mDA/viewform" class="pill campaign-pill-red" target="_blank" rel="noopener"
-                   aria-label="Share your idea in a Google Form">Share your idea <span class="pill-arrow" aria-hidden="true">&#8599;</span></a>
-                <a href="#why-me" class="pill campaign-pill-ghost">Why vote for me <span class="pill-arrow" aria-hidden="true">&darr;</span></a>
+                   aria-label="Share your idea in a Google Form">Share your idea <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                <a href="#why-me" class="pill campaign-pill-ghost">Why vote for me <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
             </div>
 
             <div class="campaign-photo">
                 <img class="campaign-standing" src="campaign/ivan-420.webp"
                      srcset="campaign/ivan-420.webp 420w, campaign/ivan-620.webp 620w, campaign/ivan-829.webp 829w"
-                     sizes="(max-width: 640px) 260px, (max-width: 1100px) 37vw, 470px"
+                     sizes="(max-width: 640px) 330px, (max-width: 1100px) 37vw, 470px"
                      width="829" height="1528" alt="Ivan Dubovyi" fetchpriority="high">
                 <figure class="campaign-card">
                     <img src="campaign/ivan-focused-360.webp"
                          srcset="campaign/ivan-focused-360.webp 360w, campaign/ivan-focused-680.webp 680w"
-                         sizes="(max-width: 640px) 215px, (max-width: 1199px) 290px, 380px"
+                         sizes="(max-width: 640px) 265px, (max-width: 1199px) 360px, 430px"
                          width="680" height="680" alt="Ivan working on Somba at his laptop" decoding="async">
                 </figure>
             </div>
@@ -2323,8 +2552,8 @@
             <div class="why-cta reveal">
                 <p>Vote Ivan Dubovyi for President of the Class of 2030</p>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzEneveUXg4yRkyPkR8zXFJIGcXIA5H5QNCTAVpTjRXa-mDA/viewform" class="pill campaign-pill-red" target="_blank" rel="noopener"
-                   aria-label="Share your idea in a Google Form">Share your idea <span class="pill-arrow" aria-hidden="true">&#8599;</span></a>
-                <a href="#portfolio" class="pill pill-ghost">See what I&rsquo;ve built <span class="pill-arrow" aria-hidden="true">&darr;</span></a>
+                   aria-label="Share your idea in a Google Form">Share your idea <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                <a href="#portfolio" class="pill pill-ghost">See what I&rsquo;ve built <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
             </div>
         </div>
     </section>
@@ -2343,10 +2572,10 @@
                 </div>
                 <div class="coding-image-container reveal">
                     <img loading="lazy" decoding="async" src="code.png" alt="Ivan coding" style="object-position: center 20%">
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 1.5rem;">
-                        <a href="https://github.com/ivandubovyi" class="coding-button">View GitHub &#8599;</a>
-                        <a href="https://ivandubovyi.github.io/cartsimulation/index.html" class="coding-button">Science Project &#8599;</a>
-                        <a href="https://ivandubovyi.github.io/algebra1/" class="coding-button">Algebra 1 Help &#8599;</a>
+                    <div class="coding-links">
+                        <a href="https://github.com/ivandubovyi" class="coding-button">View GitHub <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                        <a href="https://ivandubovyi.github.io/cartsimulation/index.html" class="coding-button">Science Project <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                        <a href="https://ivandubovyi.github.io/algebra1/" class="coding-button">Algebra 1 Help <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
                     </div>
                 </div>
             </div>
@@ -2392,7 +2621,7 @@
                     <div class="portfolio-card-body">
                         <h3>Algebridge</h3>
                         <p>Algebridge is a student-led initiative I founded to help people who are struggling with Algebra 1. The site lays out our mission and opens into an interactive learning platform with videos, step-by-step help, and a fun-house mini-game where you earn points called Bridgeys as you practice. The whole idea is to make sure nobody gets left behind at the exact moment math starts to get hard.</p>
-                        <a href="https://algebridge.org" class="portfolio-card-link" target="_blank" rel="noopener">Visit Algebridge <span class="arrow">&#8599;</span></a>
+                        <a href="https://algebridge.org" class="portfolio-card-link" target="_blank" rel="noopener">Visit Algebridge <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
                     </div>
                 </article>
 
@@ -2405,7 +2634,7 @@
                     <div class="portfolio-card-body">
                         <h3>Somba</h3>
                         <p>Somba is a network for ambitious teenagers, built around collaborators instead of followers. Think LinkedIn, but for teen builders: you apply to join, and members gather in small groups called Nets rather than one endless feed. The whole idea is people over followers, work over performance, and small close networks.</p>
-                        <a href="https://somba.dev" class="portfolio-card-link" target="_blank" rel="noopener">Visit Somba <span class="arrow">&#8599;</span></a>
+                        <a href="https://somba.dev" class="portfolio-card-link" target="_blank" rel="noopener">Visit Somba <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
                     </div>
                 </article>
 
@@ -2418,7 +2647,7 @@
                     <div class="portfolio-card-body">
                         <h3>Sentloop</h3>
                         <p>Sentloop makes sure you never miss a birthday or a holiday. You add the people who matter, and it remembers every date, writes something that sounds like you, and gets it there on the day. Where a platform lets apps send for you, the message goes out on its own. Everywhere else it hands you the message ready to go, and tells you which is which. The whole idea is staying close to people without holding all of it in your head.</p>
-                        <a href="https://sentloop.com" class="portfolio-card-link" target="_blank" rel="noopener">Visit Sentloop <span class="arrow">&#8599;</span></a>
+                        <a href="https://sentloop.com" class="portfolio-card-link" target="_blank" rel="noopener">Visit Sentloop <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
                     </div>
                 </article>
 
@@ -2525,23 +2754,23 @@
                 <p class="reveal">Here are some memorable moments from my coding projects, soccer games, and school activities. Tap any photo to open it up.</p>
 
                 <div class="photo-grid" id="photoGrid">
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="ukraine.jpg" alt="Back home in Ukraine"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="tripp.jpg" alt="On a trip"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="scratchcomp.jpg" alt="Scratch competition"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="young1.jpg" alt="Younger days"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="karateshopping.jpg" alt="Karate days"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="beach.jpg" alt="Beach day"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="mancity1.jpg" alt="At a Man City match"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="chickfila1.jpg" alt="Out with friends"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_4027.JPG" alt="A good day"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_6140.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="gladiator.jpg" alt="Game face"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_9959.JPG" alt="A great memory"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_3135.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_0990.JPG" alt="On the field"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_5436.JPG" alt="A good moment"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_1618.JPG" alt="At a Cursor meetup"><span class="photo-zoom">&#10530;</span></div>
-                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_1653.JPG" alt="Working on Somba"><span class="photo-zoom">&#10530;</span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="ukraine.jpg" alt="Back home in Ukraine"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="tripp.jpg" alt="On a trip"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="scratchcomp.jpg" alt="Scratch competition"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="young1.jpg" alt="Younger days"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="karateshopping.jpg" alt="Karate days"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="beach.jpg" alt="Beach day"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="mancity1.jpg" alt="At a Man City match"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="chickfila1.jpg" alt="Out with friends"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_4027.JPG" alt="A good day"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_6140.JPG" alt="A good moment"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="gladiator.jpg" alt="Game face"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_9959.JPG" alt="A great memory"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_3135.JPG" alt="A good moment"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_0990.JPG" alt="On the field"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_5436.JPG" alt="A good moment"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_1618.JPG" alt="At a Cursor meetup"><span class="photo-zoom" aria-hidden="true"></span></div>
+                    <div class="photo-item reveal"><img loading="lazy" decoding="async" src="IMG_1653.JPG" alt="Working on Somba"><span class="photo-zoom" aria-hidden="true"></span></div>
                 </div>
             </div>
         </div>
@@ -2592,13 +2821,13 @@
 
     <!-- ── Lightbox ── -->
     <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo viewer">
-        <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
-        <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous photo">&#8249;</button>
+        <button class="lb-close" id="lbClose" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <figure class="lb-figure">
             <img id="lbImg" src="" alt="">
             <figcaption class="lb-counter" id="lbCounter"></figcaption>
         </figure>
-        <button class="lb-nav lb-next" id="lbNext" aria-label="Next photo">&#8250;</button>
+        <button class="lb-nav lb-next" id="lbNext" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
 
     <script>
@@ -2609,11 +2838,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const ctaButtons = document.querySelectorAll('.cta-button');
     const sections = document.querySelectorAll('section');
     const nav = document.querySelector('nav');
+    const navPills = document.querySelector('.nav-pills');
 
     function setActiveLink(sectionId) {
         navLinks.forEach(link => {
             link.classList.toggle('active', link.getAttribute('href') === '#' + sectionId);
         });
+        keepActiveLinkInView();
+    }
+
+    /* ── on a phone only a few links fit in the capsule: slide the current
+          section's link into view, and fade whichever side has more ── */
+    function keepActiveLinkInView() {
+        const active = navPills && navPills.querySelector('.nav-link.active');
+        if (!active || navPills.scrollWidth <= navPills.clientWidth) return;
+        const box = navPills.getBoundingClientRect();
+        const link = active.getBoundingClientRect();
+        const left = navPills.scrollLeft + (link.left - box.left) - (box.width - link.width) / 2;
+        navPills.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+    }
+    function markNavEdges() {
+        const max = navPills.scrollWidth - navPills.clientWidth;
+        navPills.classList.toggle('can-left', navPills.scrollLeft > 2);
+        navPills.classList.toggle('can-right', navPills.scrollLeft < max - 2);
+    }
+    if (navPills) {
+        navPills.addEventListener('scroll', markNavEdges, { passive: true });
+        window.addEventListener('resize', markNavEdges);
+        if (document.fonts) document.fonts.ready.then(markNavEdges);
+        markNavEdges();
     }
 
     // center-line scrollspy: robust even when a section is taller than the viewport
@@ -2741,22 +2994,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /* ── phone browser bar: Christiana blue while the hero is under it, the
-          page colour once it scrolls away (and after a theme switch) ── */
+    /* ── phone browser bar and nav capsule: Christiana blue while the hero is
+          under them, the page's own look once it scrolls away (and after a
+          theme switch) ── */
     const themeMeta = document.querySelector('meta[name="theme-color"]');
     const hero = document.getElementById('home');
-    if (themeMeta && hero) {
+    if (hero) {
         const root = document.documentElement;
         let heroUnderBar = true;
         const syncBar = () => {
+            nav.classList.toggle('on-hero', heroUnderBar);
+            if (!themeMeta) return;
             const page = root.getAttribute('data-theme') === 'light' ? '#ffffff' : '#040a11';
             themeMeta.setAttribute('content', heroUnderBar ? '#0050a8' : page);
         };
-        // watch only a thin band along the top of the viewport, where the bar is
+        // watch only a thin band along the top of the viewport, where the bar
+        // is. It starts 1px down, because a hero whose bottom edge sits exactly
+        // at the top of the viewport still counts as intersecting
         new IntersectionObserver(([entry]) => {
             heroUnderBar = entry.isIntersecting;
             syncBar();
-        }, { rootMargin: '0px 0px -94% 0px' }).observe(hero);
+        }, { rootMargin: '-1px 0px -94% 0px' }).observe(hero);
         new MutationObserver(syncBar).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
     }
 });

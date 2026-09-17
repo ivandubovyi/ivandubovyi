@@ -58,6 +58,20 @@
     padding:9px 11px;border:1px solid var(--line-2);border-radius:6px;background:#fff}
   .field input:focus,.field select:focus,.field textarea:focus{
     outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+
+  /* show and hide the password, so a typo is visible rather than guessed at.
+     Line icons rather than an emoji, and the eye means "reveal it". */
+  .pw-wrap{position:relative;display:flex;align-items:center}
+  .pw-wrap input{padding-right:44px}
+  .pw-peek{position:absolute;right:4px;display:inline-grid;place-items:center;
+    width:36px;height:36px;padding:0;border:0;border-radius:6px;background:none;
+    color:var(--muted);cursor:pointer}
+  .pw-peek:hover{color:var(--ink-2);background:#f2f3f5}
+  .pw-peek:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .pw-peek svg{display:block;width:19px;height:19px}
+  .pw-peek .icon-hide{display:none}
+  .pw-peek[aria-pressed="true"] .icon-hide{display:block}
+  .pw-peek[aria-pressed="true"] .icon-show{display:none}
   .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
@@ -109,7 +123,24 @@
     <form id="loginForm">
       <div class="field">
         <label for="pw">Password</label>
-        <input id="pw" type="password" autocomplete="current-password" required>
+        <div class="pw-wrap">
+          <input id="pw" type="password" autocomplete="current-password" required>
+          <button type="button" class="pw-peek" id="pwPeek" aria-pressed="false" aria-label="Show password">
+            <svg class="icon-show" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                 fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1.5 12S5.5 5.5 12 5.5 22.5 12 22.5 12 18.5 18.5 12 18.5 1.5 12 1.5 12z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg class="icon-hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                 fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9.9 5.7A9.6 9.6 0 0 1 12 5.5c6.5 0 10.5 6.5 10.5 6.5a18.2 18.2 0 0 1-2.4 3.2M6.2 7.1A18.3 18.3 0 0 0 1.5 12S5.5 18.5 12 18.5a9.9 9.9 0 0 0 4-.8"/>
+              <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
+              <path d="M3 3l18 18"/>
+            </svg>
+          </button>
+        </div>
       </div>
       <button class="btn btn-primary" style="width:100%" id="loginBtn" type="submit">Sign in</button>
     </form>

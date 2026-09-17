@@ -272,9 +272,29 @@
     el("bLabel").focus();
   }
 
+  /* ---------- show and hide the password ---------- */
+
+  function setupPeek() {
+    const input = el("pw");
+    const btn = el("pwPeek");
+    if (!input || !btn) return;
+    btn.addEventListener("click", function () {
+      const wasShown = input.type === "text";
+      // switching type drops the caret in some browsers, so put it back
+      const start = input.selectionStart;
+      const end = input.selectionEnd;
+      input.type = wasShown ? "password" : "text";
+      btn.setAttribute("aria-pressed", String(!wasShown));
+      btn.setAttribute("aria-label", wasShown ? "Show password" : "Hide password");
+      input.focus();
+      try { input.setSelectionRange(start, end); } catch (e) { /* the type just changed */ }
+    });
+  }
+
   /* ---------- init ---------- */
 
   function init() {
+    setupPeek();
     if (!API) {
       el("loginErr").innerHTML =
         "No backend is connected yet. Paste the Apps Script URL into " +

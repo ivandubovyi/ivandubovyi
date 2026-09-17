@@ -2196,6 +2196,304 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
+           PETITION
+           Straight after the reasons comes the ask: sign for Ivan. Like Why
+           me it sits on the site's own canvas and borrows the campaign slab,
+           blue and red. The form is drawn as the thing it is, a sheet of
+           paper with a statement, a sign-here line and one button, so the
+           sheet stays white in both themes.
+
+           The people signing are freshmen, so a signature is a name and
+           nothing else, names only ever reach the admin console, and the page
+           shows a number only once the backend decides it is big enough to
+           help. The count starts at a real zero.
+           ═══════════════════════════════════════════════════════════════ */
+
+        #petition {
+            --slab: 'Christiana Slab', 'Roboto Slab', Rockwell, Georgia, serif;
+            --chs-blue:      #0050a8;
+            --chs-red:       #cc0000;
+            --chs-red-hover: #b00000;
+            --sheet:      #ffffff;
+            --sheet-ink:  #0f1b2d;
+            --sheet-dim:  #4a5a72;
+            --sheet-rule: #d5dde8;
+        }
+        #petition .container { max-width: 1120px; }
+        /* the views below are switched with the hidden attribute, which any
+           display rule would otherwise beat */
+        #petition [hidden] { display: none !important; }
+
+        /* Signing talks to the backend from javascript. With it switched off
+           the form would post to the page itself and put a real name in the
+           address bar, so the form waits for the js hook and a short line
+           stands in until then. */
+        #petitionForm { display: none; }
+        html.js #petitionForm { display: block; }
+        html.js .petition-nojs { display: none; }
+        #petition .petition-nojs-note {
+            margin: clamp(22px, 3vw, 30px) 0 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--sheet-dim);
+        }
+        .petition-nojs a { color: var(--chs-blue); font-weight: 600; }
+
+        .petition-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: clamp(26px, 4vw, 60px);
+            align-items: center;
+        }
+        @media (min-width: 900px) {
+            .petition-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+        }
+
+        #petition h2 {
+            margin: 0 0 0.8rem;
+            font: 800 clamp(2.8rem, 9vw, 5rem)/0.92 var(--slab);
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: var(--head);
+        }
+        #petition .petition-intro {
+            max-width: 30rem;
+            margin: 0;
+            font-size: clamp(1rem, 2.2vw, 1.15rem);
+            line-height: 1.55;
+            color: var(--fg-dim);
+        }
+
+        /* the running total, only ever filled in with the backend's number */
+        .petition-count {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.3rem 0.8rem;
+            margin: clamp(20px, 3vw, 32px) 0 0;
+        }
+        .petition-count strong {
+            font: 800 clamp(2.8rem, 8vw, 4.2rem)/0.9 var(--slab);
+            font-variant-numeric: tabular-nums;
+            color: #cc0000;
+        }
+        #petition .petition-count span {
+            font: 800 clamp(0.85rem, 1.8vw, 1rem)/1.2 var(--slab);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+        }
+
+        .petition-sheet {
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--sheet);
+            color: var(--sheet-ink);
+            box-shadow: 0 26px 64px rgba(0, 0, 0, 0.5);
+        }
+        :root[data-theme="light"] .petition-sheet {
+            border: 1px solid var(--hair);
+            box-shadow: 0 20px 46px rgba(15, 25, 40, 0.14);
+        }
+        /* letterhead in Christiana blue over the red of the varsity stripe */
+        .petition-sheet-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 13px clamp(20px, 3.4vw, 36px) 12px;
+            background: var(--chs-blue);
+            border-bottom: 4px solid var(--chs-red);
+            color: #ffffff;
+            font: 800 0.8rem/1 var(--slab);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .petition-sheet-body { padding: clamp(22px, 3.4vw, 36px); }
+
+        #petition .petition-statement {
+            margin: 0;
+            font-size: clamp(1.12rem, 2.3vw, 1.4rem);
+            font-weight: 500;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+            color: var(--sheet-ink);
+        }
+        .petition-statement strong { font-weight: 700; }
+
+        /* sign here: the red X and the rule of a paper form, with the field's
+           label underneath the line where a form prints it */
+        .petition-line {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            margin-top: clamp(22px, 3vw, 30px);
+            padding-bottom: 4px;
+            border-bottom: 2px solid var(--sheet-ink);
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .petition-line:focus-within {
+            border-bottom-color: var(--chs-blue);
+            box-shadow: 0 2px 0 0 var(--chs-blue);
+        }
+        .petition-line.has-error {
+            border-bottom-color: var(--chs-red);
+            box-shadow: 0 2px 0 0 var(--chs-red);
+        }
+        .petition-x {
+            flex: 0 0 auto;
+            padding-bottom: 5px;
+            font: 800 1.5rem/1 var(--slab);
+            color: var(--chs-red);
+        }
+        .petition-line input {
+            flex: 1 1 auto;
+            min-width: 0;
+            padding: 6px 0;
+            border: 0;
+            border-radius: 0;
+            outline: none;
+            background: transparent;
+            /* 16px or more, so an iPhone leaves the zoom alone on focus */
+            font: 500 1.3rem/1.3 var(--font-body);
+            letter-spacing: -0.01em;
+            color: var(--sheet-ink);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .petition-caption {
+            display: block;
+            margin-top: 9px;
+            font: 800 0.72rem/1 var(--slab);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sheet-dim);
+        }
+        /* a field people cannot see or reach; only a script fills it in */
+        .petition-trap {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        #petition .petition-error {
+            margin: 12px 0 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #b00000;
+        }
+
+        #petition button {
+            font-family: var(--font-head);
+            cursor: pointer;
+        }
+        .petition-submit {
+            margin-top: clamp(20px, 3vw, 26px);
+            min-height: 52px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 22px rgba(176, 0, 0, 0.24);
+        }
+        .petition-submit:hover .pill-arrow { transform: translate(2px, -2px); }
+        .petition-submit[disabled] {
+            opacity: 0.72;
+            cursor: default;
+            transform: none;
+        }
+        #petition .petition-submit:focus-visible,
+        #petition .petition-share:focus-visible {
+            outline: 3px solid var(--chs-blue);
+            outline-offset: 3px;
+        }
+
+        #petition .petition-fine {
+            display: flex;
+            gap: 9px;
+            margin: clamp(16px, 2.4vw, 20px) 0 0;
+            padding-top: clamp(14px, 2vw, 18px);
+            border-top: 1px solid var(--sheet-rule);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--sheet-dim);
+        }
+        .petition-fine svg {
+            flex: 0 0 auto;
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+        }
+
+        /* after signing: the ballot tick from the hero, drawn on paper */
+        .petition-tick {
+            display: block;
+            width: 64px;
+            height: auto;
+            margin-bottom: 14px;
+            overflow: visible;
+        }
+        .petition-tick .box { fill: none; stroke: var(--sheet-ink); stroke-width: 3.5; }
+        .petition-tick .tick-edge,
+        .petition-tick .tick {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 60 120;
+            animation: campaignTick 0.6s cubic-bezier(.65, 0, .35, 1) 0.1s both;
+        }
+        .petition-tick .tick-edge { stroke: var(--sheet); stroke-width: 12; }
+        .petition-tick .tick { stroke: var(--chs-red); stroke-width: 6.5; }
+
+        #petition .petition-sheet h3 {
+            margin: 0 0 0.5rem;
+            font: 800 clamp(1.9rem, 5vw, 2.6rem)/1 var(--slab);
+            letter-spacing: 0;
+            text-transform: uppercase;
+            color: var(--sheet-ink);
+            outline: none;
+        }
+        #petition .petition-note {
+            margin: 0;
+            font-size: clamp(1rem, 2.1vw, 1.12rem);
+            line-height: 1.55;
+            color: var(--sheet-dim);
+        }
+        .petition-done-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 22px;
+            margin-top: clamp(20px, 3vw, 26px);
+        }
+        .petition-share {
+            min-height: 52px;
+            padding: 14px 26px;
+            border: 1px solid var(--chs-blue);
+            background: var(--chs-blue);
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .petition-share:hover { transform: translateY(-2px); background: #00438f; border-color: #00438f; }
+        .petition-share:hover .pill-arrow { transform: translate(2px, -2px); }
+        @media (max-width: 640px) {
+            .petition-sheet { border-radius: 16px; }
+            /* the letterhead is two lines of caps on one row, so on a phone it
+               loses the wide tracking rather than wrapping each one in half */
+            .petition-sheet-head {
+                gap: 10px;
+                font-size: 0.66rem;
+                letter-spacing: 0.06em;
+            }
+            .petition-submit, .petition-share { width: 100%; justify-content: center; }
+            .petition-done-actions { flex-direction: column; align-items: stretch; gap: 6px; }
+        }
+        @media (hover: none) {
+            .petition-share:hover { transform: none; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
            WHY ME
            The case for voting, straight under the hero. It sits on the
            site's own canvas, dark or light, and borrows only the campaign
@@ -2473,6 +2771,7 @@
             <div class="nav-pills">
                 <ul>
                     <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#petition" class="nav-link">Petition</a></li>
                     <li><a href="#why-me" class="nav-link">Why me</a></li>
                     <li><a href="#coding" class="nav-link">Coding</a></li>
                     <li><a href="#portfolio" class="nav-link">Work</a></li>
@@ -2532,7 +2831,7 @@
             <div class="campaign-actions">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzEneveUXg4yRkyPkR8zXFJIGcXIA5H5QNCTAVpTjRXa-mDA/viewform" class="pill campaign-pill-red" target="_blank" rel="noopener"
                    aria-label="Share your idea in a Google Form">Share your idea <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-                <a href="#why-me" class="pill campaign-pill-ghost">Why vote for me <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                <a href="#petition" class="pill campaign-pill-ghost">Sign the petition <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
             </div>
 
             <div class="campaign-photo">
@@ -2552,8 +2851,95 @@
         </div>
     </section>
 
-    <!-- why me: the case for voting, straight under the hero. Cards 01 to 03
-         are facts Ivan gave; card 04 is the promise he chose to make -->
+    <!-- the petition, straight under the hero, because the ask comes before
+         the argument. A signature is a name and a time: names reach Ivan's
+         admin console alone, and the count on this page arrives from the
+         backend, which holds it back until it is big enough to help. -->
+    <section id="petition">
+        <div class="container">
+            <div class="petition-grid">
+                <div class="petition-lead">
+                    <span class="kicker reveal">Sign the petition</span>
+                    <h2 class="reveal">Add your name</h2>
+                    <p class="petition-intro reveal">I&rsquo;m running for President of the Class of 2030. Adding your name takes one line, and it shows everyone our class is behind me. That helps more than you&rsquo;d think.</p>
+
+                    <p class="petition-count reveal" id="petitionCount" hidden>
+                        <strong id="petitionCountNum">0</strong>
+                        <span id="petitionCountLabel">signatures so far</span>
+                    </p>
+                </div>
+
+                <div class="petition-sheet reveal">
+                    <div class="petition-sheet-head" aria-hidden="true">
+                        <span>Class of 2030</span>
+                        <span>Christiana High School</span>
+                    </div>
+                    <div class="petition-sheet-body">
+                        <!-- the statement stays readable with javascript off;
+                             only the signing line waits for it -->
+                        <div class="petition-nojs">
+                            <p class="petition-statement">I support <strong>Ivan Dubovyi</strong> for President of the Class of 2030. I want a president who listens first and follows through.</p>
+                            <p class="petition-nojs-note">Signing runs on JavaScript. Switch it on and refresh to add your name, or send me a message through <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzEneveUXg4yRkyPkR8zXFJIGcXIA5H5QNCTAVpTjRXa-mDA/viewform" target="_blank" rel="noopener">the idea form</a>.</p>
+                        </div>
+
+                        <!-- the form -->
+                        <form id="petitionForm" novalidate>
+                            <p class="petition-statement">I support <strong>Ivan Dubovyi</strong> for President of the Class of 2030. I want a president who listens first and follows through.</p>
+
+                            <div class="petition-line" id="petitionLine">
+                                <span class="petition-x" aria-hidden="true">X</span>
+                                <input id="petitionName" name="name" type="text" maxlength="60"
+                                       autocomplete="name" autocapitalize="words" spellcheck="false"
+                                       enterkeyhint="done" required
+                                       aria-describedby="petitionCaption petitionFine"
+                                       placeholder="First and last name">
+                            </div>
+                            <label class="petition-caption" for="petitionName" id="petitionCaption">Sign here</label>
+
+                            <!-- a field people never see; scripts fill it in and get thanked -->
+                            <div class="petition-trap" aria-hidden="true">
+                                <label for="petitionWebsite">Website</label>
+                                <input id="petitionWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+                            </div>
+
+                            <p class="petition-error" id="petitionError" role="alert" hidden></p>
+
+                            <button type="submit" class="pill campaign-pill-red petition-submit" id="petitionSubmit">
+                                <span id="petitionSubmitText">Sign the petition</span>
+                                <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h13M12.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                            </button>
+
+                            <p class="petition-fine" id="petitionFine">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5.5c0 4-2.9 7.7-7 8.9-4.1-1.2-7-4.9-7-8.9V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                                <span>Your name and today&rsquo;s date are all I save, and I&rsquo;m the only one who sees the list. Names stay off this page.</span>
+                            </p>
+                        </form>
+
+                        <!-- after signing -->
+                        <div id="petitionDone" hidden>
+                            <svg class="petition-tick" viewBox="0 0 56 48" aria-hidden="true" focusable="false">
+                                <rect class="box" x="2" y="12" width="34" height="34" rx="4"/>
+                                <path class="tick-edge" d="M9 29 19 39 50 6"/>
+                                <path class="tick" d="M9 29 19 39 50 6"/>
+                            </svg>
+                            <h3 id="petitionDoneTitle" tabindex="-1">Signed</h3>
+                            <p class="petition-note" id="petitionDoneNote">Thanks, that genuinely means a lot. If you send this to one person in our class, it means even more.</p>
+                            <div class="petition-done-actions">
+                                <button type="button" class="pill petition-share" id="petitionShare">
+                                    <span id="petitionShareText">Send it to a classmate</span>
+                                    <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- why me: the case for voting, under the petition, for anyone who wants
+         the reasons before they sign. Cards 01 to 03 are facts Ivan gave;
+         card 04 is the promise he chose to make -->
     <section id="why-me">
         <div class="container">
             <div class="why-header">
@@ -2866,6 +3252,11 @@
         <button class="lb-nav lb-next" id="lbNext" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
 
+    <!-- the petition posts to the same Apps Script backend the calendar uses,
+         so the web app URL is written down in exactly one place, and its
+         behaviour is shared with the page at /petition -->
+    <script src="calendar/config.js"></script>
+    <script src="petition.js"></script>
     <script>
 document.addEventListener('DOMContentLoaded', function () {
 

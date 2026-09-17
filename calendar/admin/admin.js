@@ -175,7 +175,7 @@
     el("blockCount").textContent = blocks.length + (blocks.length === 1 ? " event" : " events");
     el("blockList").innerHTML = blocks.length
       ? blocks.map(blockRow).join("")
-      : '<div class="empty">Nothing blocked. Every slot from 8:00am to 9:00pm is open.</div>';
+      : '<div class="empty">Nothing blocked. Every slot from 9:00am to 9:00pm is open.</div>';
 
     el("pastCount").textContent = past.length + (past.length === 1 ? " item" : " items");
     el("pastList").innerHTML = past.length

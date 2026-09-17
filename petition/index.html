@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign the petition | Ivan Dubovyi for President of the Class of 2030</title>
+<meta name="description" content="Add your name to back Ivan Dubovyi for President of the Class of 2030 at Christiana High School. It takes one line.">
+<link rel="canonical" href="https://ivandubovyi.com/petition">
+<meta name="theme-color" content="#0050a8">
+
+<!-- this is the address that goes on a poster and into a group chat, so the
+     preview card matters as much as the page -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ivan Dubovyi">
+<meta property="og:url" content="https://ivandubovyi.com/petition">
+<meta property="og:title" content="Sign the petition: Ivan Dubovyi for President of the Class of 2030">
+<meta property="og:description" content="One line, one name. Add yours to back Ivan Dubovyi for President of the Class of 2030 at Christiana High School.">
+<meta property="og:image" content="https://ivandubovyi.com/campaign/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vote Ivan Dubovyi for President of the Class of 2030 at Christiana High School">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sign the petition: Ivan Dubovyi for President of the Class of 2030">
+<meta name="twitter:description" content="One line, one name. Add yours to back Ivan Dubovyi for President of the Class of 2030.">
+<meta name="twitter:image" content="https://ivandubovyi.com/campaign/og.jpg">
+
+<link rel="preload" href="../fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../campaign/roboto-slab-800-caps.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f2135'/%3E%3Ctext x='32' y='44' font-family='Segoe UI,Tahoma,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EID%3C/text%3E%3C/svg%3E">
+
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+  /* Its own page, so its own stylesheet. One screen in Christiana blue with
+     the sheet on it, no nav and nothing to scroll past: whoever opens this
+     came here from a link or a QR code to do one thing. The sheet itself is
+     drawn to match the section on the home page. */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('../fonts/inter-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* the slab subset holds capitals and digits only, so slab text stays uppercase */
+  @font-face {
+    font-family: 'Christiana Slab';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('../campaign/roboto-slab-800-caps.woff2') format('woff2');
+    unicode-range: U+20-21, U+26-27, U+2C-2E, U+30-3A, U+3F, U+41-5A, U+B7, U+2019;
+  }
+
+  :root {
+    --chs-blue:      #0050a8;
+    --chs-blue-deep: #00438f;
+    --chs-red:       #cc0000;
+    --chs-red-hover: #b00000;
+    --slab: 'Christiana Slab', 'Roboto Slab', Rockwell, Georgia, serif;
+    --font-body: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --sheet:      #ffffff;
+    --sheet-ink:  #0f1b2d;
+    --sheet-dim:  #4a5a72;
+    --sheet-rule: #d5dde8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  [hidden] { display: none !important; }
+
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(20px, 4vw, 48px) 20px;
+    background: var(--chs-blue);
+    color: #ffffff;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font-family: inherit; }
+  img { display: block; }
+
+  /* the varsity stripe the rest of the campaign uses, along the bottom */
+  body::after {
+    content: '';
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 14px;
+    background: linear-gradient(#ffffff 0 4px, var(--chs-red) 4px 100%);
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(26px, 4vw, 56px);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+  }
+
+  /* ── the pitch ── */
+  .crest {
+    height: clamp(44px, 11vw, 60px);
+    width: auto;
+    box-sizing: content-box;
+    padding: 6px 9px;
+    margin-bottom: clamp(16px, 2.6vw, 24px);
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(0, 24, 64, 0.28);
+  }
+  .kicker {
+    display: block;
+    margin-bottom: 0.7rem;
+    font: 800 0.78rem/1 var(--slab);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+  }
+  h1 {
+    margin: 0 0 0.8rem;
+    font: 800 clamp(2.8rem, 9vw, 4.6rem)/0.92 var(--slab);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .lede {
+    max-width: 30rem;
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .count {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.8rem;
+    margin-top: clamp(20px, 3vw, 32px);
+  }
+  .count strong {
+    font: 800 clamp(2.8rem, 8vw, 4.2rem)/0.9 var(--slab);
+    font-variant-numeric: tabular-nums;
+  }
+  .count span {
+    font: 800 clamp(0.85rem, 1.8vw, 1rem)/1.2 var(--slab);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* ── the sheet ── */
+  .sheet {
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--sheet);
+    color: var(--sheet-ink);
+    box-shadow: 0 30px 70px rgba(0, 20, 55, 0.42);
+  }
+  .sheet-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px clamp(20px, 3.4vw, 36px) 12px;
+    background: var(--chs-blue);
+    border-bottom: 4px solid var(--chs-red);
+    color: #ffffff;
+    font: 800 0.8rem/1 var(--slab);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .sheet-body { padding: clamp(22px, 3.4vw, 36px); }
+
+  .statement {
+    font-size: clamp(1.12rem, 2.3vw, 1.4rem);
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  .statement strong { font-weight: 700; }
+
+  /* sign here: the red X and the rule of a paper form */
+  .petition-line {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-top: clamp(22px, 3vw, 30px);
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--sheet-ink);
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .petition-line:focus-within {
+    border-bottom-color: var(--chs-blue);
+    box-shadow: 0 2px 0 0 var(--chs-blue);
+  }
+  .petition-line.has-error {
+    border-bottom-color: var(--chs-red);
+    box-shadow: 0 2px 0 0 var(--chs-red);
+  }
+  .x {
+    flex: 0 0 auto;
+    padding-bottom: 5px;
+    font: 800 1.5rem/1 var(--slab);
+    color: var(--chs-red);
+  }
+  .petition-line input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 6px 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    /* 16px or more, so an iPhone leaves the zoom alone on focus */
+    font: 500 1.3rem/1.3 var(--font-body);
+    letter-spacing: -0.01em;
+    color: var(--sheet-ink);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .caption {
+    display: block;
+    margin-top: 9px;
+    font: 800 0.72rem/1 var(--slab);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sheet-dim);
+  }
+  /* a field people cannot see or reach; only a script fills it in */
+  .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .error {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: #b00000;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 52px;
+    padding: 14px 28px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .25s ease, background .25s ease, border-color .25s ease;
+  }
+  .btn svg { display: block; width: 1em; height: 1em; }
+  .btn .arrow { transition: transform .25s ease; }
+  .btn-red {
+    margin-top: clamp(20px, 3vw, 26px);
+    background: var(--chs-red);
+    border-color: var(--chs-red);
+    color: #ffffff;
+    box-shadow: 0 10px 22px rgba(176, 0, 0, 0.24);
+  }
+  .btn-red:hover { background: var(--chs-red-hover); border-color: var(--chs-red-hover); transform: translateY(-2px); }
+  .btn-blue { background: var(--chs-blue); border-color: var(--chs-blue); color: #ffffff; }
+  .btn-blue:hover { background: var(--chs-blue-deep); border-color: var(--chs-blue-deep); transform: translateY(-2px); }
+  .btn:hover .arrow { transform: translate(2px, -2px); }
+  .btn[disabled] { opacity: 0.72; cursor: default; transform: none; }
+  .btn:focus-visible { outline: 3px solid var(--chs-blue); outline-offset: 3px; }
+
+  .fine {
+    display: flex;
+    gap: 9px;
+    margin-top: clamp(16px, 2.4vw, 20px);
+    padding-top: clamp(14px, 2vw, 18px);
+    border-top: 1px solid var(--sheet-rule);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--sheet-dim);
+  }
+  .fine svg { flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; }
+
+  /* after signing */
+  .tick { display: block; width: 64px; height: auto; margin-bottom: 14px; overflow: visible; }
+  .tick .box { fill: none; stroke: var(--sheet-ink); stroke-width: 3.5; }
+  .tick .tick-edge, .tick .tick-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* the path is about 59 units long: a longer dash plus a longer gap let
+       the offset draw it in from nothing */
+    stroke-dasharray: 60 120;
+    animation: drawTick 0.6s cubic-bezier(.65, 0, .35, 1) 0.1s both;
+  }
+  .tick .tick-edge { stroke: var(--sheet); stroke-width: 12; }
+  .tick .tick-line { stroke: var(--chs-red); stroke-width: 6.5; }
+  @keyframes drawTick { from { stroke-dashoffset: 61; } }
+
+  #petitionDone h2 {
+    margin-bottom: 0.5rem;
+    font: 800 clamp(1.9rem, 5vw, 2.6rem)/1 var(--slab);
+    text-transform: uppercase;
+    outline: none;
+  }
+  .note { font-size: clamp(1rem, 2.1vw, 1.12rem); line-height: 1.55; color: var(--sheet-dim); }
+  .done-actions { margin-top: clamp(20px, 3vw, 26px); }
+
+  .back {
+    margin: clamp(24px, 4vw, 40px) auto 0;
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .back a { color: #ffffff; font-weight: 600; }
+
+  /* signing talks to the backend from javascript, so with it switched off
+     the form waits and a short line stands in */
+  #petitionForm { display: none; }
+  html.js #petitionForm { display: block; }
+  html.js .nojs { display: none; }
+  .nojs-note { margin-top: clamp(22px, 3vw, 30px); color: var(--sheet-dim); }
+  .nojs-note a { color: var(--chs-blue); font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .sheet { border-radius: 16px; }
+    /* the letterhead is two lines of caps on one row, so on a phone it loses
+       the wide tracking rather than wrapping each one in half */
+    .sheet-head { gap: 10px; font-size: 0.66rem; letter-spacing: 0.06em; }
+    .btn-red, .btn-blue { width: 100%; }
+  }
+  @media (hover: none) {
+    .btn:hover { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <div>
+    <img class="crest" src="../campaign/christiana-logo.webp" width="243" height="200"
+         alt="Christiana High School" decoding="async">
+    <span class="kicker">Sign the petition</span>
+    <h1>Add your name</h1>
+    <p class="lede">I&rsquo;m running for President of the Class of 2030. Adding your name takes one line, and it shows everyone our class is behind me. That helps more than you&rsquo;d think.</p>
+
+    <p class="count" id="petitionCount" hidden>
+      <strong id="petitionCountNum">0</strong>
+      <span id="petitionCountLabel">signatures so far</span>
+    </p>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-head" aria-hidden="true">
+      <span>Class of 2030</span>
+      <span>Christiana High School</span>
+    </div>
+    <div class="sheet-body">
+      <!-- the statement stays readable with javascript off; only the
+           signing line waits for it -->
+      <div class="nojs">
+        <p class="statement">I support <strong>Ivan Dubovyi</strong> for President of the Class of 2030. I want a president who listens first and follows through.</p>
+        <p class="nojs-note">Signing runs on JavaScript. Switch it on and refresh to add your name, or send me a message through <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzEneveUXg4yRkyPkR8zXFJIGcXIA5H5QNCTAVpTjRXa-mDA/viewform" target="_blank" rel="noopener">the idea form</a>.</p>
+      </div>
+
+      <form id="petitionForm" novalidate>
+        <p class="statement">I support <strong>Ivan Dubovyi</strong> for President of the Class of 2030. I want a president who listens first and follows through.</p>
+
+        <div class="petition-line" id="petitionLine">
+          <span class="x" aria-hidden="true">X</span>
+          <input id="petitionName" name="name" type="text" maxlength="60"
+                 autocomplete="name" autocapitalize="words" spellcheck="false"
+                 enterkeyhint="done" required autofocus
+                 aria-describedby="petitionCaption petitionFine"
+                 placeholder="First and last name">
+        </div>
+        <label class="caption" for="petitionName" id="petitionCaption">Sign here</label>
+
+        <!-- a field people never see; scripts fill it in and get thanked -->
+        <div class="trap" aria-hidden="true">
+          <label for="petitionWebsite">Website</label>
+          <input id="petitionWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <p class="error" id="petitionError" role="alert" hidden></p>
+
+        <button type="submit" class="btn btn-red" id="petitionSubmit">
+          <span id="petitionSubmitText">Sign the petition</span>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h13M12.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+
+        <p class="fine" id="petitionFine">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5.5c0 4-2.9 7.7-7 8.9-4.1-1.2-7-4.9-7-8.9V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span>Your name and today&rsquo;s date are all I save, and I&rsquo;m the only one who sees the list. Names stay off this page.</span>
+        </p>
+      </form>
+
+      <div id="petitionDone" hidden>
+        <svg class="tick" viewBox="0 0 56 48" aria-hidden="true" focusable="false">
+          <rect class="box" x="2" y="12" width="34" height="34" rx="4"/>
+          <path class="tick-edge" d="M9 29 19 39 50 6"/>
+          <path class="tick-line" d="M9 29 19 39 50 6"/>
+        </svg>
+        <h2 id="petitionDoneTitle" tabindex="-1">Signed</h2>
+        <p class="note">Thanks, that genuinely means a lot. If you send this to one person in our class, it means even more.</p>
+        <div class="done-actions">
+          <button type="button" class="btn btn-blue" id="petitionShare">
+            <span id="petitionShareText">Send it to a classmate</span>
+            <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<p class="back">More about me at <a href="/">ivandubovyi.com</a></p>
+
+<script src="../calendar/config.js"></script>
+<script src="../petition.js"></script>
+</body>
+</html>

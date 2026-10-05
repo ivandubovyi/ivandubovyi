@@ -1932,6 +1932,23 @@
             text-underline-offset: 4px;
         }
         .campaign-actions .campaign-pill-ghost:hover { color: var(--chs-silver); }
+        /* contact line: its own row under the two actions */
+        .campaign-reach {
+            flex: 1 0 100%;
+            margin: 10px 0 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.86);
+        }
+        .campaign-reach a {
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            text-underline-offset: 3px;
+            white-space: nowrap;
+        }
+        .campaign-reach a:hover { color: var(--chs-silver); }
         #home.campaign a:focus-visible {
             outline: 3px solid #ffffff;
             outline-offset: 3px;
@@ -2846,6 +2863,7 @@
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdzEneveUXg4yRkyPkR8zXFJIGcXIA5H5QNCTAVpTjRXa-mDA/viewform" class="pill campaign-pill-red" target="_blank" rel="noopener"
                    aria-label="Share your idea in a Google Form">Share your idea <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
                 <a href="#petition" class="pill campaign-pill-ghost">Sign the petition <span class="pill-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+                <p class="campaign-reach">Reach me: <a href="mailto:info@ivandubovyi.com">info@ivandubovyi.com</a> or <a href="tel:+13023457448">302-345-7448</a></p>
             </div>
 
             <div class="campaign-photo">

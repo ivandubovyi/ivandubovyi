@@ -2831,6 +2831,13 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         @media (prefers-reduced-motion: reduce) { .press-page::before, .press-page::after, .press-star { animation: none; } }
         @media (max-width: 600px) { .press-photos img { width: 110px; height: 110px; } .press-card { padding: 26px 24px; } }
+    .press-photos img { transition: transform .45s cubic-bezier(.3,1.7,.5,1), box-shadow .3s ease, border-color .3s ease, border-radius .6s ease; cursor: pointer; }
+        .press-photos img:hover { transform: translateY(-14px) rotate(0deg) scale(1.12); box-shadow: var(--shadow-lg); border-color: var(--gold); border-radius: 50%; z-index: 2; animation: wiggle .6s ease .45s; }
+        .press-photos img:nth-child(2):hover { transform: translateY(-26px) rotate(0deg) scale(1.12); border-color: var(--sky); }
+        .press-photos img:nth-child(3):hover { border-color: var(--accent); }
+        .press-photos { position: relative; }
+        @keyframes wiggle { 25% { rotate: 4deg; } 50% { rotate: -4deg; } 75% { rotate: 2deg; } 100% { rotate: 0deg; } }
+        @media (prefers-reduced-motion: reduce) { .press-photos img { transition: none; } .press-photos img:hover { animation: none; } }
     </style>
 </head>
 <body>
